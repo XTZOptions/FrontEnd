@@ -7,210 +7,472 @@ export default function Home() {
     <div className="container">
       <Head>
         <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
+       
+        
+        <link rel="stylesheet" type="text/css" href="/landing/css/style.css" />
+        <link rel="stylesheet" type="text/css" href="/landing/css/responsive.css" />
+        <link rel="stylesheet" type="text/css" href="/landing/css/color-one.css" />
+
+        <script src="/landing/vendor/jquery.2.2.3.min.js"></script>
+	
+		    <script src="/landing/vendor/popper.js/popper.min.js"></script>
+		
+		    <script src="/landing/vendor/bootstrap/js/bootstrap.min.js"></script>
+
+			  <script src="/landing/vendor/jquery-easing/jquery.easing.min.js"></script>
+		
+		    <script src="/landing/vendor/language-switcher/jquery.polyglot.language.switcher.js"></script>
+	
+	  	  <script src="/landing/vendor/jquery.appear.js"></script>
+		    <script src="/landing/vendor/jquery.countTo.js"></script>
+		    <script src="/landing/vendor/fancybox/dist/jquery.fancybox.min.js"></script>
+		    <script src="/landing/vendor/owl-carousel/owl.carousel.min.js"></script>
+		    <script src="/landing/vendor/aos-next/dist/aos.js"></script>
+
+		    <script src="/landing/js/theme.js"></script>
       </Head>
-
-      <main>
-        <h1 className="title">
-          Learn <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className="description">
-          Get started by editing <code>pages/index.js</code>
-        </p>
-
-        <div className="grid">
-          <a href="https://nextjs.org/docs" className="card">
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className="card">
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/zeit/next.js/tree/master/examples"
-            className="card"
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className="card"
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+      <div className="main-page-wrapper">
+  
+  <div id="loader-wrapper">
+    <div id="loader" />
+  </div>
+  <div className="html-top-content">
+    <div className="theme-top-section">
+      <header className="theme-main-menu">
+        <div className="container">
+          <div className="menu-wrapper clearfix">
+            <div className="logo">
+              <a href="index.html">
+                <img src="images/logo/logo.png" alt="Logo" />
+              </a>
+            </div>
+          
+            <nav className="navbar navbar-expand-lg" id="mega-menu-holder">
+              <div className="container">
+                <button
+                  className="navbar-toggler"
+                  type="button"
+                  data-toggle="collapse"
+                  data-target="#navbarResponsive"
+                  aria-controls="navbarResponsive"
+                  aria-expanded="false"
+                  aria-label="Toggle navigation"
+                >
+                  <i className="fa fa-bars" aria-hidden="true" />
+                </button>
+                <div className="collapse navbar-collapse" id="navbarResponsive">
+                  <ul className="navbar-nav">
+                    <li className="nav-item">
+                      <a
+                        className="nav-link js-scroll-trigger"
+                        href="#features"
+                      >
+                        Feature
+                      </a>
+                    </li>
+                    <li className="nav-item">
+                      <a
+                        className="nav-link js-scroll-trigger"
+                        href="#services"
+                      >
+                        Services
+                      </a>
+                    </li>
+                   
+                  </ul>
+                </div>
+              </div>
+            </nav>
+          </div>{" "}
+         
+        </div>{" "}
+        
+      </header>{" "}
+     
+      <div id="theme-banner" className="theme-banner-one">
+        
+        <img src="images/icon/1.png"  className="icon-shape-one" />
+        <img src="images/icon/2.png"  className="icon-shape-two" />
+        <img src="images/icon/3.png"  className="icon-shape-three" />
+        <div className="round-shape-one" />
+        <div className="round-shape-two">
+          <img src="images/icon/4.png"  />
         </div>
-      </main>
+        <div className="round-shape-three" />
+        <div className="container">
+          <div className="main-text-wrapper">
+            <h1>
+              Populer Crypto <br />
+              Revolution is begin <br />
+              from here.
+            </h1>
+            <p>A revolutionary digital coin system for future money.</p>
+            <ul className="button-group clearfix">
+              <li>
+                <a href="#">Explore</a>
+              </li>
+              <li>
+                <div className="btn-group">
+                  <a href="#" className="download-button">
+                    Download For OS X
+                  </a>
+                  <button
+                    type="button"
+                    className="btn dropdown-toggle"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                  >
+                    <span className="sr-only">Toggle Dropdown</span>
+                  </button>
+                  <div className="dropdown-menu dropdown-menu-right">
+                    <a className="download-win" href="#">
+                      Download For Windows
+                    </a>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+       
+      </div>{" "}
       
-      <Link href="/dashboard/">
-        <a>
-          Link to DashBoard
-        </a>  
-      </Link>
-      <footer>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className="logo" />
-        </a>
-      </footer>
+    </div>{" "}
+    
+    <div className="our-features-one" id="features">
+      <div className="container">
+        <div className="theme-title">
+          <h2>
+            The Largest &amp; Best <span>Digital Currency</span> <br />
+            for Your Future money
+          </h2>
+        </div>
+        <div className="row">
+          <div className="col-md-4 col-xs-12">
+            <div className="single-feature">
+              <div className="icon-box">
+                <img src="images/icon/5.png"  className="primary-icon" />
+              </div>
+              <h3>cryto Is Untraceable</h3>
+              <p>
+                Sending and receiving addresses as well as transacted amounts.
+              </p>
+            </div>{" "}
+            {/* /.single-feature */}
+          </div>{" "}
+          {/* /.col- */}
+          <div className="col-md-4 col-xs-12">
+            <div className="single-feature border-fix">
+              <div className="icon-box">
+                <img src="images/icon/6.png"  className="primary-icon" />
+              </div>
+              <h3>Autonomy self-rule.</h3>
+              <p>
+                cryto has striven to solve blockchain governance, transparency
+                brings{" "}
+              </p>
+            </div>{" "}
+            {/* /.single-feature */}
+          </div>{" "}
+          {/* /.col- */}
+          <div className="col-md-4 col-xs-12">
+            <div className="single-feature">
+              <div className="icon-box">
+                <img src="images/icon/7.png"  className="primary-icon" />
+              </div>
+              <h3>Transparency &amp; Stability</h3>
+              <p>
+                In crypto, transparency brings trust &amp; old strong
+                transparency
+              </p>
+            </div>{" "}
+            {/* /.single-feature */}
+          </div>{" "}
+          {/* /.col- */}
+        </div>{" "}
+        {/* /.row */}
+      </div>{" "}
+      {/* /.container */}
+    </div>{" "}
+    {/* /.our-features */}
+    <div className="our-feature-two" id="services">
+      <div className="container">
+        <div className="row single-block">
+          <div className="col-lg-6">
+            <div className="text">
+              <div className="number">01</div>
+              <h2 className="title">
+                <span>Decentralized</span> Minning Our core focus.
+              </h2>
+              <p>
+                Mining should be fair &amp; easy! We do not allow ASICs on our
+                network. The development team is wholy commited to with keeping
+                it that way.
+              </p>
+              <a href="#" className="learn-more">
+                Learn More <i className="flaticon-right-thin" />
+              </a>
+            </div>{" "}
+            {/* /.text */}
+          </div>{" "}
+          {/* /.col- */}
+          <div className="col-lg-6 img-box">
+            <div>
+              <img src="images/shape/1.png"  />
+            </div>
+          </div>
+        </div>{" "}
+        {/* /.row */}
+        <div className="row single-block">
+          <div className="col-lg-6 order-lg-last">
+            <div className="text">
+              <div className="number">02</div>
+              <h2 className="title">
+                <span>Populer</span> Money and Smart wallet.
+              </h2>
+              <p>
+                Mining should be fair &amp; easy! We do not allow ASICs on our
+                network. The development team is wholy commited to with keeping
+                it that way.
+              </p>
+              <a href="#" className="learn-more">
+                Learn More <i className="flaticon-right-thin" />
+              </a>
+            </div>{" "}
+            {/* /.text */}
+          </div>{" "}
+          {/* /.col- */}
+          <div className="col-lg-6 order-lg-first img-box">
+            <div>
+              <img src="images/shape/1.1.png"  />
+            </div>
+          </div>
+        </div>{" "}
+        {/* /.row */}
+        <div className="row single-block">
+          <div className="col-lg-6">
+            <div className="text">
+              <div className="number">03</div>
+              <h2 className="title">
+                <span>Upholding</span> Confidentialit &amp; Strong Security.
+              </h2>
+              <p>
+                Mining should be fair &amp; easy! We do not allow ASICs on our
+                network. The development team is wholy commited to with keeping
+                it that way.
+              </p>
+              <a href="#" className="learn-more">
+                Learn More <i className="flaticon-right-thin" />
+              </a>
+            </div>{" "}
+            {/* /.text */}
+          </div>{" "}
+          {/* /.col- */}
+          <div className="col-lg-6 img-box">
+            <div>
+              <img src="images/shape/2.png"  />
+            </div>
+          </div>
+        </div>{" "}
+        {/* /.row */}
+      </div>{" "}
+      {/* /.container */}
+    </div>{" "}
+    {/* /.our-feature-two */}
+    <div className="theme-counter">
+      <div className="container">
+        <div className="bg-image">
+          <div className="row theme-title">
+            <div className="col-lg-6 order-lg-last">
+              <h2>
+                <span>Fastest</span> Growing Global Netwark.
+              </h2>
+            </div>
+            <div className="col-lg-6 order-lg-first">
+              <p>
+                We’r the fastest growing digital money that with strong
+                community &amp; security. Check our info with some number.
+              </p>
+            </div>
+          </div>
+          <div className="counter-wrapper">
+            <div className="row">
+              <div className="col-sm-4">
+                <h2 className="number">
+                  <span
+                    className="timer"
+                    data-from={0}
+                    data-to={120}
+                    data-speed={1200}
+                    data-refresh-interval={5}
+                  >
+                    0
+                  </span>
+                  K
+                </h2>
+                <p>Global Customer</p>
+              </div>
+              <div className="col-sm-4">
+                <h2 className="number">
+                  <span
+                    className="timer"
+                    data-from={0}
+                    data-to={36}
+                    data-speed={1200}
+                    data-refresh-interval={5}
+                  >
+                    0
+                  </span>
+                  Y
+                </h2>
+                <p>Years Expereince</p>
+              </div>
+              <div className="col-sm-4">
+                <h2 className="number">
+                  <span
+                    className="timer"
+                    data-from={0}
+                    data-to={7}
+                    data-speed={1200}
+                    data-refresh-interval={5}
+                  >
+                    0
+                  </span>
+                  B
+                </h2>
+                <p>Current Stock</p>
+              </div>
+            </div>
+          </div>{" "}
+          {/* /.counter-wrapper */}
+        </div>{" "}
+        {/* /.bg-image */}
+      </div>{" "}
+      {/* /.container */}
+    </div>{" "}
+    {/* /.theme-counter */}
+    
+    <footer className="theme-footer">
+      <div className="container">
+        <div className="inner-wrapper">
+          <div className="top-footer-data-wrapper">
+            <div className="row">
+              <div className="col-lg-4 col-sm-6 footer-logo">
+                <div className="logo">
+                  <a href="index.html">
+                    <img src="images/logo/logo.png" alt="Logo" />
+                  </a>
+                </div>
+                <a href="#" className="email">
+                  crytoco@company.com
+                </a>
+                <a href="#" className="mobile">
+                  648-xxx-xxxx
+                </a>
+              </div>{" "}
+              {/* /.footer-logo */}
+              <div className="col-lg-2 col-sm-6 footer-list">
+                <h4 className="title">Quick Links</h4>
+                <ul>
+                  <li>
+                    <a href="#">How it Works</a>
+                  </li>
+                  <li>
+                    <a href="#">Guarantee</a>
+                  </li>
+                  <li>
+                    <a href="#">Security</a>
+                  </li>
+                  <li>
+                    <a href="#">Report Bug</a>
+                  </li>
+                  <li>
+                    <a href="#">Pricing</a>
+                  </li>
+                </ul>
+              </div>{" "}
+              {/* /.footer-list */}
+              <div className="col-lg-3 col-sm-6 footer-list">
+                <h4 className="title">About Us</h4>
+                <ul>
+                  <li>
+                    <a href="#">About Singleton</a>
+                  </li>
+                  <li>
+                    <a href="#">Jobs</a>
+                  </li>
+                  <li>
+                    <a href="#">Team</a>
+                  </li>
+                  <li>
+                    <a href="#">Testimonials</a>
+                  </li>
+                  <li>
+                    <a href="#">Blog</a>
+                  </li>
+                </ul>
+              </div>{" "}
+              {/* /.footer-list */}
+              <div className="col-lg-3 col-sm-6 footer-list">
+                <h4 className="title">Become A Member</h4>
+                <ul>
+                  <li>
+                    <a href="#">Contributor</a>
+                  </li>
+                  <li>
+                    <a href="#">Union Member</a>
+                  </li>
+                  <li>
+                    <a href="#">Processing</a>
+                  </li>
+                  <li>
+                    <a href="#">Legal Action</a>
+                  </li>
+                </ul>
+              </div>{" "}
+              {/* /.footer-list */}
+            </div>{" "}
+            {/* /.row */}
+          </div>{" "}
+          {/* /.top-footer-data-wrapper */}
+          <div className="bottom-footer clearfix">
+            <p className="copyright">
+              © 2018 <a href="#">cryto</a> All Right Reserved
+            </p>
+            <ul>
+              <li>
+                <a href="#">
+                  <i className="fa fa-facebook" aria-hidden="true" />
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <i className="fa fa-twitter" aria-hidden="true" />
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <i className="fa fa-instagram" aria-hidden="true" />
+                </a>
+              </li>
+            </ul>
+          </div>{" "}
+          
+        </div>
+      </div>
+     
+    </footer>
+  </div>
+  
+  <button className="scroll-top tran3s color-one-bg">
+    <i className="fa fa-long-arrow-up" aria-hidden="true" />
+  </button>
 
-      <style jsx>{`
-        .container {
-          min-height: 100vh;
-          padding: 0 0.5rem;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-        }
+</div>;
 
-        main {
-          padding: 5rem 0;
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-        }
+      
 
-        footer {
-          width: 100%;
-          height: 100px;
-          border-top: 1px solid #eaeaea;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
-
-        footer img {
-          margin-left: 0.5rem;
-        }
-
-        footer a {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
-
-        a {
-          color: inherit;
-          text-decoration: none;
-        }
-
-        .title a {
-          color: #0070f3;
-          text-decoration: none;
-        }
-
-        .title a:hover,
-        .title a:focus,
-        .title a:active {
-          text-decoration: underline;
-        }
-
-        .title {
-          margin: 0;
-          line-height: 1.15;
-          font-size: 4rem;
-        }
-
-        .title,
-        .description {
-          text-align: center;
-        }
-
-        .description {
-          line-height: 1.5;
-          font-size: 1.5rem;
-        }
-
-        code {
-          background: #fafafa;
-          border-radius: 5px;
-          padding: 0.75rem;
-          font-size: 1.1rem;
-          font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
-            DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
-        }
-
-        .grid {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          flex-wrap: wrap;
-
-          max-width: 800px;
-          margin-top: 3rem;
-        }
-
-        .card {
-          margin: 1rem;
-          flex-basis: 45%;
-          padding: 1.5rem;
-          text-align: left;
-          color: inherit;
-          text-decoration: none;
-          border: 1px solid #eaeaea;
-          border-radius: 10px;
-          transition: color 0.15s ease, border-color 0.15s ease;
-        }
-
-        .card:hover,
-        .card:focus,
-        .card:active {
-          color: #0070f3;
-          border-color: #0070f3;
-        }
-
-        .card h3 {
-          margin: 0 0 1rem 0;
-          font-size: 1.5rem;
-        }
-
-        .card p {
-          margin: 0;
-          font-size: 1.25rem;
-          line-height: 1.5;
-        }
-
-        .logo {
-          height: 1em;
-        }
-
-        @media (max-width: 600px) {
-          .grid {
-            width: 100%;
-            flex-direction: column;
-          }
-        }
-      `}</style>
-
-      <style jsx global>{`
-        html,
-        body {
-          padding: 0;
-          margin: 0;
-          font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
-            Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
-            sans-serif;
-        }
-
-        * {
-          box-sizing: border-box;
-        }
-      `}</style>
     </div>
   )
 }
