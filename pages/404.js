@@ -42,11 +42,10 @@ export default function pageNotFound() {
         It seems like we couldn't find the page you were looking for
       </div>
     </div>
-    <Link href="/">
-    <a className="box__button">
+   
+    <a href="/" className="box__button">
       Go back
     </a>
-    </Link>
     
   </div>
 </div>

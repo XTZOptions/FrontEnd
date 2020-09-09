@@ -1,8 +1,18 @@
-import React from 'react'; 
+import React,{Component} from 'react'; 
+
+export default class extends Component {
 
 
-export default function FirstPost() {
+  render(){
 
+    return (
+            <div>
+              <h2>
+                Heading From React Component
+              </h2>
+            </div>
 
-    return <h1>Dashboard Home Page</h1>
+    )
   }
+
+}
