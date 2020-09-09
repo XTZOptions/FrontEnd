@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <div className="container">
       <Head>
-        <title>Create Next App</title>
+        <title>Tezos Options Platform</title>
        
         
         <link rel="stylesheet" type="text/css" href="/landing/css/style.css" />
@@ -109,27 +109,13 @@ export default function Home() {
             <p>A revolutionary digital coin system for future money.</p>
             <ul className="button-group clearfix">
               <li>
-                <a href="#">Explore</a>
-              </li>
-              <li>
                 <div className="btn-group">
+                  <Link href="/dashboard/">
                   <a href="#" className="download-button">
-                    Download For OS X
+                    Visit DashBoard
                   </a>
-                  <button
-                    type="button"
-                    className="btn dropdown-toggle"
-                    data-toggle="dropdown"
-                    aria-haspopup="true"
-                    aria-expanded="false"
-                  >
-                    <span className="sr-only">Toggle Dropdown</span>
-                  </button>
-                  <div className="dropdown-menu dropdown-menu-right">
-                    <a className="download-win" href="#">
-                      Download For Windows
-                    </a>
-                  </div>
+                  </Link>
+                        
                 </div>
               </li>
             </ul>
@@ -229,7 +215,7 @@ export default function Home() {
             <div className="text">
               <div className="number">02</div>
               <h2 className="title">
-                <span>Populer</span> Money and Smart wallet.
+                <span>Popular</span> Wallet Integration.
               </h2>
               <p>
                 Mining should be fair &amp; easy! We do not allow ASICs on our
@@ -239,17 +225,17 @@ export default function Home() {
               <a href="#" className="learn-more">
                 Learn More <i className="flaticon-right-thin" />
               </a>
-            </div>{" "}
-            {/* /.text */}
-          </div>{" "}
-          {/* /.col- */}
+            </div>
+          
+          </div>
+          
           <div className="col-lg-6 order-lg-first img-box">
             <div>
               <img src="images/shape/1.1.png"  />
             </div>
           </div>
-        </div>{" "}
-        {/* /.row */}
+        </div>
+        
         <div className="row single-block">
           <div className="col-lg-6">
             <div className="text">
@@ -344,125 +330,10 @@ export default function Home() {
                 <p>Current Stock</p>
               </div>
             </div>
-          </div>{" "}
-          {/* /.counter-wrapper */}
-        </div>{" "}
-        {/* /.bg-image */}
-      </div>{" "}
-      {/* /.container */}
-    </div>{" "}
-    {/* /.theme-counter */}
-    
-    <footer className="theme-footer">
-      <div className="container">
-        <div className="inner-wrapper">
-          <div className="top-footer-data-wrapper">
-            <div className="row">
-              <div className="col-lg-4 col-sm-6 footer-logo">
-                <div className="logo">
-                  <a href="index.html">
-                    <img src="images/logo/logo.png" alt="Logo" />
-                  </a>
-                </div>
-                <a href="#" className="email">
-                  crytoco@company.com
-                </a>
-                <a href="#" className="mobile">
-                  648-xxx-xxxx
-                </a>
-              </div>{" "}
-              {/* /.footer-logo */}
-              <div className="col-lg-2 col-sm-6 footer-list">
-                <h4 className="title">Quick Links</h4>
-                <ul>
-                  <li>
-                    <a href="#">How it Works</a>
-                  </li>
-                  <li>
-                    <a href="#">Guarantee</a>
-                  </li>
-                  <li>
-                    <a href="#">Security</a>
-                  </li>
-                  <li>
-                    <a href="#">Report Bug</a>
-                  </li>
-                  <li>
-                    <a href="#">Pricing</a>
-                  </li>
-                </ul>
-              </div>{" "}
-              {/* /.footer-list */}
-              <div className="col-lg-3 col-sm-6 footer-list">
-                <h4 className="title">About Us</h4>
-                <ul>
-                  <li>
-                    <a href="#">About Singleton</a>
-                  </li>
-                  <li>
-                    <a href="#">Jobs</a>
-                  </li>
-                  <li>
-                    <a href="#">Team</a>
-                  </li>
-                  <li>
-                    <a href="#">Testimonials</a>
-                  </li>
-                  <li>
-                    <a href="#">Blog</a>
-                  </li>
-                </ul>
-              </div>{" "}
-              {/* /.footer-list */}
-              <div className="col-lg-3 col-sm-6 footer-list">
-                <h4 className="title">Become A Member</h4>
-                <ul>
-                  <li>
-                    <a href="#">Contributor</a>
-                  </li>
-                  <li>
-                    <a href="#">Union Member</a>
-                  </li>
-                  <li>
-                    <a href="#">Processing</a>
-                  </li>
-                  <li>
-                    <a href="#">Legal Action</a>
-                  </li>
-                </ul>
-              </div>{" "}
-              {/* /.footer-list */}
-            </div>{" "}
-            {/* /.row */}
-          </div>{" "}
-          {/* /.top-footer-data-wrapper */}
-          <div className="bottom-footer clearfix">
-            <p className="copyright">
-              © 2018 <a href="#">cryto</a> All Right Reserved
-            </p>
-            <ul>
-              <li>
-                <a href="#">
-                  <i className="fa fa-facebook" aria-hidden="true" />
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <i className="fa fa-twitter" aria-hidden="true" />
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <i className="fa fa-instagram" aria-hidden="true" />
-                </a>
-              </li>
-            </ul>
-          </div>{" "}
-          
-        </div>
+          </div>
+        </div>   
       </div>
-     
-    </footer>
+    </div>
   </div>
   
   <button className="scroll-top tran3s color-one-bg">
