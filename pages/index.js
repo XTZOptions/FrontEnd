@@ -106,15 +106,14 @@ export default function Home() {
               Revolution is begin <br />
               from here.
             </h1>
-            <p>A revolutionary digital coin system for future money.</p>
+            <p>A revolutionary digital securities platform for Tezos.</p>
             <ul className="button-group clearfix">
               <li>
                 <div className="btn-group">
-                  <Link href="/dashboard/">
-                  <a href="#" className="download-button">
+                  
+                  <a href="/dashboard" className="download-button">
                     Visit DashBoard
                   </a>
-                  </Link>
                         
                 </div>
               </li>
