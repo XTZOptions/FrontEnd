@@ -1,7 +1,7 @@
 import React,{Component} from 'react'; 
 import axios from 'axios';
 import { ThanosWallet } from "@thanos-wallet/dapp";
-import {Button,Typography,Grid,AppBar, Toolbar} from '@material-ui/core';
+import {Button,Typography,Grid,AppBar, Toolbar,TextField} from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/core/styles';
 import theme from '../../components/navbar';
 import {makeStyles} from '@material-ui/core/styles';
@@ -30,7 +30,7 @@ export default class extends Component {
     super();
 
 
-    this.state = {wallet:null,tezos:null,token:null,options:null,balance:0,tokenBal:0,publicKey:null};
+    this.state = {wallet:null,tezos:null,token:null,options:null,balance:0,tokenBal:0,publicKey:null,MintAmount:0};
    
   }
 
@@ -87,11 +87,17 @@ export default class extends Component {
       
   }
 
-  CheckData = async() => {
+  MintToken = async() => {
+          const operation = await this.state.token.methods.mint(this.state.publicKey,this.state.MintAmount).send({amount:this.state.MintAmount});
+          await operation.confirmation();
 
-    console.log(this.state.token);
+          console.log("Minted Token");
   }
-
+  updateAmount = (amount)=>{
+    
+    console.log(amount);
+    this.setState({MintAmount:parseInt(amount)})
+  }
   // static async getInitialProps(){
     
   //   const response = await axios.get("https://api.coinbase.com/v2/prices/XTZ-USD/sell");
@@ -155,6 +161,22 @@ export default class extends Component {
                           <img src="money.png"/>
                           {this.state.tokenBal} ALA Token
                         </Typography>
+                      </CardContent>
+                    </Card>
+                  </Grid>
+                  <Grid item xs={3}>
+
+                  </Grid>
+                  <Grid item xs = {4}>
+
+                  </Grid>
+                  <Grid item xs={3}>
+                    <Card variant="elevation">
+                      <CardContent>
+                       
+                          <img src="money.png"/>
+                          <TextField label="Mint" variant="outlined" onChange={(event)=>{this.updateAmount(event.target.value)}} />
+                          <Button onClick={this.MintToken}>Mint Token</Button>
                       </CardContent>
                     </Card>
                   </Grid>
