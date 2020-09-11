@@ -88,11 +88,16 @@ export default class extends Component {
   }
 
   MintToken = async() => {
+
+      if (this.state.token != null)
+    {
           const operation = await this.state.token.methods.mint(this.state.publicKey,this.state.MintAmount).send({amount:this.state.MintAmount});
           await operation.confirmation();
 
           console.log("Minted Token");
-  }
+    }
+    
+      }
   updateAmount = (amount)=>{
     
     console.log(amount);
