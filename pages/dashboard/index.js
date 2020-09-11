@@ -180,7 +180,7 @@ export default class extends Component {
                       <CardContent>
                        
                           <img src="money.png"/>
-                          <TextField label="Mint" variant="outlined" onChange={(event)=>{this.updateAmount(event.target.value)}} />
+                          <TextField label="Mint" type="number" variant="outlined" onChange={(event)=>{this.updateAmount(event.target.value)}} />
                           <Button onClick={this.MintToken} variant="contained" color="primary">Mint Tokens</Button>
                       </CardContent>
                     </Card>
