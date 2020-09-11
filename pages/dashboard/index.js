@@ -176,7 +176,7 @@ export default class extends Component {
                        
                           <img src="money.png"/>
                           <TextField label="Mint" variant="outlined" onChange={(event)=>{this.updateAmount(event.target.value)}} />
-                          <Button onClick={this.MintToken}>Mint Token</Button>
+                          <Button onClick={this.MintToken} variant="contained" color="primary">Mint Tokens</Button>
                       </CardContent>
                     </Card>
                   </Grid>
