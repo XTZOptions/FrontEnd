@@ -1,8 +1,26 @@
 import React,{Component} from 'react'; 
 import axios from 'axios';
 import { ThanosWallet } from "@thanos-wallet/dapp";
+import {Button,Typography,Grid,AppBar, Toolbar} from '@material-ui/core';
+import { ThemeProvider } from '@material-ui/core/styles';
+import theme from '../../components/navbar';
+import {makeStyles} from '@material-ui/core/styles';
+import Card from '@material-ui/core/Card';
+import Paper from '@material-ui/core/Paper';
+import CardContent from '@material-ui/core/CardContent';
 
-//import * from '../../components/navbar';
+import Link from 'next/link';
+
+
+const useStyles = makeStyles({
+    helloThereStyle:{
+      fontStyle:'oblique'
+    },
+    TypographyStyles :{
+      flex : 1, 
+      fontStyle:'oblique'
+    }
+});
 
 export default class extends Component {
 
@@ -12,15 +30,15 @@ export default class extends Component {
     super();
 
 
-    this.state = {wallet:null,tezos:null,token:null,options:null,balance:0,tokenBal:0};
+    this.state = {wallet:null,tezos:null,token:null,options:null,balance:0,tokenBal:0,publicKey:null};
    
   }
 
   componentDidMount()
   {
     this.WalletConfigure();
-    this.ValueUpdate();
-    this.timer = setInterval(()=> this.ValueUpdate(), 10000);
+  
+    this.timer = setInterval(()=> this.ValueUpdate(), 5000);
   }
 
   WalletConfigure = async() => {
@@ -34,9 +52,9 @@ export default class extends Component {
       const tezos = wallet.toTezos();
       const token = await tezos.wallet.at("KT1KtyJeL78tdHnzwCPE8M14WDb1zqsnLkjQ");
       const options = await tezos.wallet.at("KT1Wo8GDGJgzgZWmRXWfpWpEhho8wUPp9eAR");
-      
+      const  accountPkh = await tezos.wallet.pkh();
 
-      this.setState({wallet:wallet,tezos:tezos,token:token,options:options});
+      this.setState({wallet:wallet,tezos:tezos,token:token,options:options,publicKey:accountPkh});
 
       
     }
@@ -57,7 +75,8 @@ export default class extends Component {
         const  amount = await this.state.tezos.tz.getBalance(accountPkh);
 
         var balance =  this.state.tezos.format('mutez','tz',amount).toString();
-        balance = parseInt(balance);
+        balance = parseFloat(balance);
+        balance = balance.toFixed(2);
         const data = await this.state.token.storage();
         const account = await data.ledger.get(accountPkh);
         
@@ -66,6 +85,11 @@ export default class extends Component {
         this.setState({balance:balance,tokenBal:ALAToken});
       }
       
+  }
+
+  CheckData = async() => {
+
+    console.log(this.state.token);
   }
 
   // static async getInitialProps(){
@@ -82,20 +106,63 @@ export default class extends Component {
 
   render(){
 
+    
     return (
             <div>
-              <h2>
-                Heading From React Component
-              </h2>
-              <h4>
-                XTZ Balance : {this.state.balance}
-              </h4>
-              <h4>
-                ALA Token : {this.state.tokenBal}
-              </h4>
-              <h4>
+              <AppBar position="fixed"  theme={theme}>
+                <Toolbar>
+                  <Typography variant="h6" className={useStyles.TypographyStyles}>
+                    Options Platform
+                  </Typography>
+                  <div style={{'marginLeft':'45%'}}>
+                    <Link href="/dashboard/sellar">
+                      <Typography variant="h6" className={useStyles.TypographyStyles}>
+                        Sell Options
+                      </Typography>
+                    </Link>
+                  </div>
+                  <div style={{'marginLeft':'5%'}}>
+                    <Link href="/dashboard/buyer">
+                      <Typography variant="h6" className={useStyles.TypographyStyles}>
+                        Purchase Options
+                      </Typography>
+                    </Link>
+                  </div>
+                 
+                  
+                </Toolbar>
+              </AppBar>
+              <div style={{'marginTop':'15%'}}>
+              <ThemeProvider theme={theme}>
+                <Grid container spacing={3}>
+                  <Grid item xs={3}>
+
+                  </Grid>
+                  <Grid item xs={3} >
+                    <Card variant="elevation">
+                      <CardContent>
+                        <Typography variant="h6" >
+                        <img src="decentralized.png"/>
+                          {this.state.balance} XTZ Token
+                        </Typography>
+                      </CardContent>
+                    </Card>
+                  </Grid>
+                  <Grid item xs={3}>
+                    <Card variant="elevation">
+                      <CardContent>
+                        <Typography variant="h6" >
+                          <img src="money.png"/>
+                          {this.state.tokenBal} ALA Token
+                        </Typography>
+                      </CardContent>
+                    </Card>
+                  </Grid>
+                </Grid>
+              </ThemeProvider>
+              </div>
               
-              </h4>
+             
             </div>
     )
   }

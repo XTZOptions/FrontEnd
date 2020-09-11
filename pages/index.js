@@ -83,11 +83,9 @@ export default function Home() {
                 </div>
               </div>
             </nav>
-          </div>{" "}
-         
-        </div>{" "}
-        
-      </header>{" "}
+          </div>
+        </div>
+      </header>
      
       <div id="theme-banner" className="theme-banner-one">
         
@@ -121,9 +119,9 @@ export default function Home() {
           </div>
         </div>
        
-      </div>{" "}
+      </div>
       
-    </div>{" "}
+    </div>
     
     <div className="our-features-one" id="features">
       <div className="container">
@@ -143,10 +141,8 @@ export default function Home() {
               <p>
                 Sending and receiving addresses as well as transacted amounts.
               </p>
-            </div>{" "}
-            {/* /.single-feature */}
-          </div>{" "}
-          {/* /.col- */}
+            </div>
+          </div>
           <div className="col-md-4 col-xs-12">
             <div className="single-feature border-fix">
               <div className="icon-box">
@@ -155,12 +151,10 @@ export default function Home() {
               <h3>Autonomy self-rule.</h3>
               <p>
                 cryto has striven to solve blockchain governance, transparency
-                brings{" "}
+                brings
               </p>
-            </div>{" "}
-            {/* /.single-feature */}
-          </div>{" "}
-          {/* /.col- */}
+            </div>
+          </div>
           <div className="col-md-4 col-xs-12">
             <div className="single-feature">
               <div className="icon-box">
@@ -171,16 +165,11 @@ export default function Home() {
                 In crypto, transparency brings trust &amp; old strong
                 transparency
               </p>
-            </div>{" "}
-            {/* /.single-feature */}
-          </div>{" "}
-          {/* /.col- */}
-        </div>{" "}
-        {/* /.row */}
-      </div>{" "}
-      {/* /.container */}
-    </div>{" "}
-    {/* /.our-features */}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <div className="our-feature-two" id="services">
       <div className="container">
         <div className="row single-block">
@@ -198,17 +187,14 @@ export default function Home() {
               <a href="#" className="learn-more">
                 Learn More <i className="flaticon-right-thin" />
               </a>
-            </div>{" "}
-            {/* /.text */}
-          </div>{" "}
-          {/* /.col- */}
+            </div>
+          </div>
           <div className="col-lg-6 img-box">
             <div>
               <img src="images/shape/1.png"  />
             </div>
           </div>
-        </div>{" "}
-        {/* /.row */}
+        </div>
         <div className="row single-block">
           <div className="col-lg-6 order-lg-last">
             <div className="text">
@@ -250,21 +236,17 @@ export default function Home() {
               <a href="#" className="learn-more">
                 Learn More <i className="flaticon-right-thin" />
               </a>
-            </div>{" "}
-            {/* /.text */}
-          </div>{" "}
-          {/* /.col- */}
+            </div>
+           
+          </div>
           <div className="col-lg-6 img-box">
             <div>
               <img src="images/shape/2.png"  />
             </div>
           </div>
-        </div>{" "}
-        {/* /.row */}
-      </div>{" "}
-      {/* /.container */}
-    </div>{" "}
-    {/* /.our-feature-two */}
+        </div>
+      </div>
+    </div>
     <div className="theme-counter">
       <div className="container">
         <div className="bg-image">
