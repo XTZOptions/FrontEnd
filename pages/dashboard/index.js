@@ -30,7 +30,8 @@ export default class extends Component {
     super();
 
 
-    this.state = {wallet:null,tezos:null,token:null,options:null,balance:0,tokenBal:0,publicKey:null,MintAmount:0};
+    this.state = {wallet:null,tezos:null,token:null,options:null,balance:0,tokenBal:0,
+      publicKey:null,MintAmount:0,estimate:0};
    
   }
 
@@ -101,7 +102,8 @@ export default class extends Component {
   updateAmount = (amount)=>{
     
     console.log(amount);
-    this.setState({MintAmount:parseInt(amount)})
+    amount = parseInt(amount)
+    this.setState({MintAmount:amount,estimate:amount*400})
   }
   // static async getInitialProps(){
     
@@ -175,13 +177,17 @@ export default class extends Component {
                   <Grid item xs = {4}>
 
                   </Grid>
-                  <Grid item xs={3}>
+                  <Grid item xs={6}>
                     <Card variant="elevation">
                       <CardContent>
                        
                           <img src="money.png"/>
                           <TextField label="Mint" type="number" variant="outlined" onChange={(event)=>{this.updateAmount(event.target.value)}} />
                           <Button onClick={this.MintToken} variant="contained" color="primary">Mint Tokens</Button>
+                          <Typography variant="h5">
+                            Estimated Amount: {this.state.estimate}
+                          </Typography>
+                      
                       </CardContent>
                     </Card>
                   </Grid>

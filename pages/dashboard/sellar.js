@@ -175,13 +175,15 @@ export default class extends Component {
                   <Grid item xs = {4}>
 
                   </Grid>
-                  <Grid item xs={3}>
+                  <Grid item xs={6}>
                     <Card variant="elevation">
                       <CardContent>
                        
                           <img src="money.png"/>
                           <TextField label="Mint" variant="outlined" onChange={(event)=>{this.updateAmount(event.target.value)}} />
                           <Button onClick={this.MintToken} variant="contained" color="primary">Mint Tokens</Button>
+                          
+                      
                       </CardContent>
                     </Card>
                   </Grid>
