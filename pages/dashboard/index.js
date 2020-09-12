@@ -156,7 +156,7 @@ export default class extends Component {
                       <CardContent>
                         <Grid container spacing={1}>
                           <Grid item xs={4}>
-                           <img src="decentralized.png"/>
+                           <img src="/decentralized.png"/>
                           </Grid>
                           <Grid item xs={8}>
                            <Typography variant="h6" >
@@ -172,7 +172,7 @@ export default class extends Component {
                       <CardContent>
                       <Grid container spacing={1}>
                           <Grid item xs={4}>
-                          <img src="money.png"/>
+                          <img src="/money.png"/>
                           </Grid>
                           <Grid item xs={8}>
                            <Typography variant="h6" >
@@ -180,12 +180,6 @@ export default class extends Component {
                             </Typography>
                           </Grid>
                         </Grid>
-
-
-                        <Typography variant="h6" >
-                          
-                          
-                        </Typography>
                       </CardContent>
                     </Card>
                   </Grid>
@@ -200,7 +194,7 @@ export default class extends Component {
                       <CardContent>
                           <Grid container spacing={3}>
                             <Grid item xs={2}>
-                              <img src="money.png"/>
+                              <img src="/money.png"/>
                             </Grid>
                             <Grid item xs={3}>
                               <TextField label="Mint" type="number" variant="outlined" onChange={(event)=>{this.updateAmount(event.target.value)}} />
@@ -219,9 +213,7 @@ export default class extends Component {
                   </Grid>
                 </Grid>
               </ThemeProvider>
-              </div>
-              
-             
+              </div>             
             </div>
     )
   }

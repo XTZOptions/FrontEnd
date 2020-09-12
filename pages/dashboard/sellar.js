@@ -30,7 +30,8 @@ export default class extends Component {
     super();
 
 
-    this.state = {wallet:null,tezos:null,token:null,options:null,balance:0,tokenBal:0,publicKey:null,MintAmount:0};
+    this.state = {wallet:null,tezos:null,token:null,options:null,balance:0,tokenBal:0,
+      publicKey:null,AddAmount:0,estimate:0,poolSize:0,totalCapital:0};
    
   }
 
@@ -78,11 +79,15 @@ export default class extends Component {
         balance = parseFloat(balance);
         balance = balance.toFixed(2);
         const data = await this.state.token.storage();
+        const val = await this.state.options.storage();
+        
+        const capital = val.validation.totalSupply.toNumber();
+        
         const account = await data.ledger.get(accountPkh);
         
         const ALAToken = account.balance.toNumber();
         
-        this.setState({balance:balance,tokenBal:ALAToken});
+        this.setState({poolSize:val.poolSet.length,totalCapital:capital});
       }
       
   }
@@ -101,7 +106,8 @@ export default class extends Component {
   updateAmount = (amount)=>{
     
     console.log(amount);
-    this.setState({MintAmount:parseInt(amount)})
+    amount = parseInt(amount)
+    this.setState({AddAmount:amount,estimate:amount*400})
   }
   // static async getInitialProps(){
     
@@ -152,46 +158,66 @@ export default class extends Component {
                   <Grid item xs={3} >
                     <Card variant="elevation">
                       <CardContent>
-                        <Typography variant="h6" >
-                        <img src="decentralized.png"/>
-                          {this.state.balance} XTZ Token
-                        </Typography>
+                        <Grid container spacing={1}>
+                          <Grid item xs={4}>
+                           <img src="/economic.png"/>
+                          </Grid>
+                          <Grid item xs={8}>
+                           <Typography variant="h6" >
+                              {this.state.totalCapital} Total Liquidity 
+                            </Typography>
+                          </Grid>
+                        </Grid>
                       </CardContent>
                     </Card>
                   </Grid>
                   <Grid item xs={3}>
                     <Card variant="elevation">
                       <CardContent>
-                        <Typography variant="h6" >
-                          <img src="money.png"/>
-                          {this.state.tokenBal} ALA Token
-                        </Typography>
+                      <Grid container spacing={1}>
+                          <Grid item xs={4}>
+                          <img src="/group.png"/>
+                          </Grid>
+                          <Grid item xs={8}>
+                           <Typography variant="h6" >
+                            {this.state.poolSize} Liquidity Providers
+                            </Typography>
+                          </Grid>
+                        </Grid>
                       </CardContent>
                     </Card>
                   </Grid>
                   <Grid item xs={3}>
 
                   </Grid>
-                  <Grid item xs = {4}>
+                  <Grid item xs = {3}>
 
                   </Grid>
                   <Grid item xs={6}>
                     <Card variant="elevation">
                       <CardContent>
-                       
-                          <img src="money.png"/>
-                          <TextField label="Mint" variant="outlined" onChange={(event)=>{this.updateAmount(event.target.value)}} />
-                          <Button onClick={this.MintToken} variant="contained" color="primary">Mint Tokens</Button>
-                          
-                      
+                          <Grid container spacing={3}>
+                            <Grid item xs={2}>
+                              <img src="/money.png"/>
+                            </Grid>
+                            <Grid item xs={3}>
+                              <TextField label="Mint" type="number" variant="outlined" onChange={(event)=>{this.updateAmount(event.target.value)}} />
+                            </Grid>
+                            <Grid item xs={4}>
+                              <Typography variant="h5">
+                                Estimated Tokens: {this.state.estimate}
+                              </Typography>
+                            </Grid>
+                            <Grid item xs={3}>
+                              <Button onClick={this.MintToken} variant="contained" color="primary">Increase Supply</Button>
+                            </Grid>
+                          </Grid>  
                       </CardContent>
                     </Card>
                   </Grid>
                 </Grid>
               </ThemeProvider>
-              </div>
-              
-             
+              </div>             
             </div>
     )
   }
