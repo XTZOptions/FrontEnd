@@ -181,15 +181,15 @@ export default class extends Component {
                     <Card variant="elevation">
                       <CardContent>
                           <Grid container spacing={3}>
-                            <Grid item xs={3}>
+                            <Grid item xs={2}>
                               <img src="money.png"/>
                             </Grid>
                             <Grid item xs={3}>
                               <TextField label="Mint" type="number" variant="outlined" onChange={(event)=>{this.updateAmount(event.target.value)}} />
                             </Grid>
-                            <Grid item xs={3}>
+                            <Grid item xs={4}>
                               <Typography variant="h5">
-                                Estimated Amount: {this.state.estimate}
+                                Estimated Tokens: {this.state.estimate}
                               </Typography>
                             </Grid>
                             <Grid item xs={3}>
