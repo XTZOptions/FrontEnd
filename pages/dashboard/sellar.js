@@ -31,7 +31,7 @@ export default class extends Component {
 
 
     this.state = {wallet:null,tezos:null,token:null,options:null,balance:0,tokenBal:0,
-      publicKey:null,AddAmount:0,estimate:0,poolSize:0,totalCapital:0};
+      publicKey:null,AddAmount:0,estimate:0,poolSize:0,totalCapital:0,premium:10};
    
   }
 
@@ -78,6 +78,7 @@ export default class extends Component {
         var balance =  this.state.tezos.format('mutez','tz',amount).toString();
         balance = parseFloat(balance);
         balance = balance.toFixed(2);
+
         const data = await this.state.token.storage();
         const val = await this.state.options.storage();
         
@@ -149,7 +150,7 @@ export default class extends Component {
                   
                 </Toolbar>
               </AppBar>
-              <div style={{'marginTop':'15%'}}>
+              <div style={{'marginTop':'10%'}}>
               <ThemeProvider theme={theme}>
                 <Grid container spacing={3}>
                   <Grid item xs={3}>
@@ -200,16 +201,36 @@ export default class extends Component {
                             <Grid item xs={2}>
                               <img src="/money.png"/>
                             </Grid>
-                            <Grid item xs={3}>
-                              <TextField label="Mint" type="number" variant="outlined" onChange={(event)=>{this.updateAmount(event.target.value)}} />
+                            <Grid item xs={6}>
+                              <TextField label="Increase Pool Supply" type="number" variant="outlined" onChange={(event)=>{this.updateAmount(event.target.value)}} />
                             </Grid>
+                            
                             <Grid item xs={4}>
+                              <Button onClick={this.MintToken} variant="contained" color="primary">Increase Supply</Button>
+                            </Grid>
+                          </Grid>  
+                      </CardContent>
+                    </Card>
+                  </Grid>
+                  <Grid item xs={3}>
+                  </Grid>
+                  <Grid item xs = {3}>
+                  </Grid>
+
+                  <Grid item xs={6}>
+                    <Card variant="elevation">
+                      <CardContent>
+                          <Grid container spacing={3}>
+                            <Grid item xs={2}>
+                              <img src="/bank.png"/>
+                            </Grid>
+                            <Grid item xs={6}>
                               <Typography variant="h5">
-                                Estimated Tokens: {this.state.estimate}
+                                Estimated Premium: {this.state.premium}
                               </Typography>
                             </Grid>
-                            <Grid item xs={3}>
-                              <Button onClick={this.MintToken} variant="contained" color="primary">Increase Supply</Button>
+                            <Grid item xs={4}>
+                              <Button onClick={this.MintToken} variant="contained" color="secondary">Withdraw Premium</Button>
                             </Grid>
                           </Grid>  
                       </CardContent>
