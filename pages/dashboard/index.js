@@ -154,19 +154,37 @@ export default class extends Component {
                   <Grid item xs={3} >
                     <Card variant="elevation">
                       <CardContent>
-                        <Typography variant="h6" >
-                        <img src="decentralized.png"/>
-                          {this.state.balance} XTZ Token
-                        </Typography>
+                        <Grid container spacing={1}>
+                          <Grid item xs={4}>
+                           <img src="decentralized.png"/>
+                          </Grid>
+                          <Grid item xs={8}>
+                           <Typography variant="h6" >
+                              {this.state.balance} XTZ Token
+                            </Typography>
+                          </Grid>
+                        </Grid>
                       </CardContent>
                     </Card>
                   </Grid>
                   <Grid item xs={3}>
                     <Card variant="elevation">
                       <CardContent>
-                        <Typography variant="h6" >
+                      <Grid container spacing={1}>
+                          <Grid item xs={4}>
                           <img src="money.png"/>
-                          {this.state.tokenBal} ALA Token
+                          </Grid>
+                          <Grid item xs={8}>
+                           <Typography variant="h6" >
+                            {this.state.tokenBal} ALA Token
+                            </Typography>
+                          </Grid>
+                        </Grid>
+
+
+                        <Typography variant="h6" >
+                          
+                          
                         </Typography>
                       </CardContent>
                     </Card>
