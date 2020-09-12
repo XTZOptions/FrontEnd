@@ -174,20 +174,28 @@ export default class extends Component {
                   <Grid item xs={3}>
 
                   </Grid>
-                  <Grid item xs = {4}>
+                  <Grid item xs = {3}>
 
                   </Grid>
                   <Grid item xs={6}>
                     <Card variant="elevation">
                       <CardContent>
-                       
-                          <img src="money.png"/>
-                          <TextField label="Mint" type="number" variant="outlined" onChange={(event)=>{this.updateAmount(event.target.value)}} />
-                          <Button onClick={this.MintToken} variant="contained" color="primary">Mint Tokens</Button>
-                          <Typography variant="h5">
-                            Estimated Amount: {this.state.estimate}
-                          </Typography>
-                      
+                          <Grid container spacing={3}>
+                            <Grid item xs={3}>
+                              <img src="money.png"/>
+                            </Grid>
+                            <Grid item xs={3}>
+                              <TextField label="Mint" type="number" variant="outlined" onChange={(event)=>{this.updateAmount(event.target.value)}} />
+                            </Grid>
+                            <Grid item xs={3}>
+                              <Typography variant="h5">
+                                Estimated Amount: {this.state.estimate}
+                              </Typography>
+                            </Grid>
+                            <Grid item xs={3}>
+                              <Button onClick={this.MintToken} variant="contained" color="primary">Mint Tokens</Button>
+                            </Grid>
+                          </Grid>  
                       </CardContent>
                     </Card>
                   </Grid>
