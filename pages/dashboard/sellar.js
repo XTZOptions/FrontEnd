@@ -31,7 +31,7 @@ export default class extends Component {
 
 
     this.state = {wallet:null,tezos:null,token:null,options:null,balance:0,tokenBal:0,
-      publicKey:null,AddAmount:0,estimate:0,poolSize:0,totalCapital:0,premium:10};
+      publicKey:null,Amount:0,estimate:0,poolSize:0,totalCapital:0,premium:10};
    
   }
 
@@ -93,22 +93,35 @@ export default class extends Component {
       
   }
 
-  MintToken = async() => {
+  AddToken = async() => {
 
       if (this.state.token != null)
     {
-          const operation = await this.state.token.methods.mint(this.state.publicKey,this.state.MintAmount).send({amount:this.state.MintAmount});
+          const operation = await this.state.options.methods.putSeller(this.state.Amount).send();
           await operation.confirmation();
 
-          console.log("Minted Token");
+          console.log("Added Supply");
     }
     
       }
+
+  EarnPremium = async() => {
+
+    if (this.state.token != null)
+    {
+          console.log(this.state.options);
+          // const operation = await this.state.options.methods.WithdrawPremium().send();
+          // await operation.confirmation();
+
+          console.log("Withdraw Premium");
+    }
+
+  }
   updateAmount = (amount)=>{
     
     console.log(amount);
     amount = parseInt(amount)
-    this.setState({AddAmount:amount,estimate:amount*400})
+    this.setState({Amount:amount})
   }
   // static async getInitialProps(){
     
@@ -206,7 +219,7 @@ export default class extends Component {
                             </Grid>
                             
                             <Grid item xs={4}>
-                              <Button onClick={this.MintToken} variant="contained" color="primary">Increase Supply</Button>
+                              <Button onClick={this.AddToken} variant="contained" color="primary">Increase Supply</Button>
                             </Grid>
                           </Grid>  
                       </CardContent>
@@ -230,7 +243,7 @@ export default class extends Component {
                               </Typography>
                             </Grid>
                             <Grid item xs={4}>
-                              <Button onClick={this.MintToken} variant="contained" color="secondary">Withdraw Premium</Button>
+                              <Button onClick={this.EarnPremium} variant="contained" color="secondary">Withdraw Premium</Button>
                             </Grid>
                           </Grid>  
                       </CardContent>
@@ -239,7 +252,7 @@ export default class extends Component {
                 </Grid>
               </ThemeProvider>
               </div>             
-            </div>
+            </div>  
     )
   }
 
