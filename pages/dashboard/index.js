@@ -48,7 +48,7 @@ export default class extends Component {
     {
 
       await ThanosWallet.isAvailable();
-      const wallet = new ThanosWallet("Shopping Dapp");
+      const wallet = new ThanosWallet("Vikalp Platform");
       await wallet.connect("carthagenet");
       const tezos = wallet.toTezos();
       const token = await tezos.wallet.at("KT1KtyJeL78tdHnzwCPE8M14WDb1zqsnLkjQ");
