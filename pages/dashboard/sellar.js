@@ -138,23 +138,18 @@ export default class extends Component {
 
     if (this.state.token != null)
     {
-          // const operation = await this.state.options.methods.WithdrawPremium().send();
-          // await operation.confirmation();
-          console.log("Hello! World");
-          const available = await ThanosWallet.isAvailable();
-          if(available)
-          {
-            console.log("Available");
-            const wallet = new ThanosWallet("My Super DApp");
-            await wallet.connect("carthagenet");
-            const tezos = wallet.toTezos();
-
-          }
-          
-
-
+        // const operation = await this.state.options.methods.WithdrawPremium().send();
+        // await operation.confirmation();
     }
 
+  }
+
+  EarnPremium = async() => {
+    if(this.state.token != null)
+    {
+        // const operation = await this.state.options.methods.WithdrawPremium().send();
+        // await operation.confirmation();
+    }
   }
 
   ChangeAccount = async() => {
@@ -345,7 +340,7 @@ export default class extends Component {
                               </Typography>
                             </Grid>
                             <Grid item xs={4}>
-                              <Button onClick={this.EarnPremium} variant="contained" color="primary" disabled={this.state.LockButton}>Withdraw Amount</Button>
+                              <Button onClick={this.EarnAmount} variant="contained" color="primary" disabled={this.state.LockButton}>Withdraw Amount</Button>
                             </Grid>
                           </Grid>  
                       </CardContent>
