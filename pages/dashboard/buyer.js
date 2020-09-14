@@ -30,7 +30,13 @@ export default class extends Component {
     super();
 
 
-    this.state = {wallet:null,tezos:null,token:null,options:null,balance:0,tokenBal:0,publicKey:null,MintAmount:0};
+    this.state = {wallet:null,tezos:null,token:null,options:null,balance:0,tokenBal:0,
+      publicKey:null,Amount:0,estimate:0,
+      poolSize:0,totalCapital:0,premium:0,
+      PremiumButton:true,SupplyButton:true,
+      LockAmount:0,LockButton:true,CycleTime:null
+    };
+    
    
   }
 
@@ -54,7 +60,7 @@ export default class extends Component {
       const options = await tezos.wallet.at("KT1Wo8GDGJgzgZWmRXWfpWpEhho8wUPp9eAR");
       const  accountPkh = await tezos.wallet.pkh();
 
-      this.setState({wallet:wallet,tezos:tezos,token:token,options:options,publicKey:accountPkh});
+      this.setState({wallet:wallet,tezos:tezos,token:token,options:options,publicKey:accountPkh,SupplyButton:false});
 
       
     }
@@ -77,52 +83,104 @@ export default class extends Component {
         var balance =  this.state.tezos.format('mutez','tz',amount).toString();
         balance = parseFloat(balance);
         balance = balance.toFixed(2);
+
         const data = await this.state.token.storage();
+        const val = await this.state.options.storage();
+        
+        const capital = val.validation.totalSupply.toNumber();
+        
         const account = await data.ledger.get(accountPkh);
         
         const ALAToken = account.balance.toNumber();
+      
+        const optionsContract = await this.state.options.storage();
         
-        this.setState({balance:balance,tokenBal:ALAToken});
+        this.setState({CycleTime:optionsContract.validation.cycleEnd});
+        
+        const premium = await optionsContract.contractSellar.get(this.state.publicKey);
+        
+        
+        if (premium != undefined )
+        {
+          if (premium.premium.toNumber() > 0 )
+          {
+            this.setState({premium:premium.premium.toNumber(),PremiumButton:false});
+          }
+          else
+          {
+            this.setState({premium:0,PremiumButton:true});
+          }
+          this.setState({LockAmount:premium.amount.toNumber()});
+        }
+        else {
+          console.log("Undefined State");
+        }
+        
+        this.setState({poolSize:val.poolSet.length,totalCapital:capital});
+      
       }
       
   }
 
-  MintToken = async() => {
+  AddToken = async() => {
 
       if (this.state.token != null)
     {
-          const operation = await this.state.token.methods.mint(this.state.publicKey,this.state.MintAmount).send({amount:this.state.MintAmount});
+          const operation = await this.state.options.methods.putSeller(this.state.Amount).send();
           await operation.confirmation();
 
-          console.log("Minted Token");
+          console.log("Added Supply");
     }
     
       }
+
+  EarnPremium = async() => {
+
+    if (this.state.token != null)
+    {
+        // const operation = await this.state.options.methods.WithdrawPremium().send();
+        // await operation.confirmation();
+    }
+
+  }
+
+  EarnPremium = async() => {
+    if(this.state.token != null)
+    {
+        // const operation = await this.state.options.methods.WithdrawPremium().send();
+        // await operation.confirmation();
+    }
+  }
+
+  ChangeAccount = async() => {
+    const available = await ThanosWallet.isAvailable();
+    if(available)
+    {
+      console.log("Available");
+      var wallet = new ThanosWallet("My Super DApp");
+      await wallet.connect("carthagenet");
+      var tezos = wallet.toTezos();
+      
+      wallet = null; 
+      tezos = null ;
+      
+    }
+
+  }
   updateAmount = (amount)=>{
     
     console.log(amount);
-    this.setState({MintAmount:parseInt(amount)})
+    amount = parseInt(amount)
+    this.setState({Amount:amount})
   }
-  // static async getInitialProps(){
-    
-  //   const response = await axios.get("https://api.coinbase.com/v2/prices/XTZ-USD/sell");
-  //   const Amount = parseInt(response.data.data.amount*100)
-  //   console.log(Amount);
-
-  //   return {
-  //     Price: Amount
-  //   }
-  // }
-
 
   render(){
 
-    
     return (
             <div>
               <Head>
                 <title>
-                  Vikalp Platform
+                  Vikalp Options Platform
                 </title>
               </Head>
               <AppBar position="fixed"  theme={theme}>
@@ -146,58 +204,143 @@ export default class extends Component {
                       </Typography>
                     </Link>
                   </div>
-                 
-                  
+                  <div style={{'marginLeft':'5%'}}>
+                    <Button style={{'color':'white'}} variant="contained" color="primary" onClick={this.ChangeAccount}>
+                        Change Account
+                    </Button>
+                  </div>
                 </Toolbar>
               </AppBar>
-              <div style={{'marginTop':'15%'}}>
+              <div style={{'marginTop':'6%'}}>
               <ThemeProvider theme={theme}>
                 <Grid container spacing={3}>
-                  <Grid item xs={3}>
+                  <Grid item xs={1}>
 
                   </Grid>
                   <Grid item xs={3} >
                     <Card variant="elevation">
                       <CardContent>
-                        <Typography variant="h6" >
-                        <img src="decentralized.png"/>
-                          {this.state.balance} XTZ Token
-                        </Typography>
+                        <Grid container spacing={1}>
+                          <Grid item xs={4}>
+                           <img src="/economic.png"/>
+                          </Grid>
+                          <Grid item xs={8}>
+                           <Typography variant="h6" >
+                              {this.state.totalCapital} Total Liquidity 
+                            </Typography>
+                          </Grid>
+                        </Grid>
                       </CardContent>
                     </Card>
                   </Grid>
                   <Grid item xs={3}>
                     <Card variant="elevation">
                       <CardContent>
-                        <Typography variant="h6" >
-                          <img src="money.png"/>
-                          {this.state.tokenBal} ALA Token
-                        </Typography>
+                      <Grid container spacing={1}>
+                          <Grid item xs={4}>
+                          <img src="/group.png"/>
+                          </Grid>
+                          <Grid item xs={8}>
+                           <Typography variant="h6" >
+                            {this.state.poolSize} Liquidity Providers
+                            </Typography>
+                          </Grid>
+                        </Grid>
                       </CardContent>
                     </Card>
                   </Grid>
-                  <Grid item xs={3}>
+                  <Grid item xs={4}>
+                  <Card variant="elevation">
+                      <CardContent>
+                      <Grid container spacing={1}>
+                          <Grid item xs={3}>
+                          <img src="/countdown.png"/>
+                          </Grid>
+                          <Grid item xs={9}>
+                           <Typography variant="h6" >
+                            Cycle End :{this.state.CycleTime} 
+                            </Typography>
+                          </Grid>
+                        </Grid>
+                      </CardContent>
+                    </Card>
+                  </Grid>
+                  <Grid item xs = {3}>
 
                   </Grid>
-                  <Grid item xs = {4}>
-
-                  </Grid>
-                  <Grid item xs={3}>
+                  <Grid item xs={6}>
                     <Card variant="elevation">
                       <CardContent>
-                       
-                          <img src="money.png"/>
-                          <TextField label="Mint" variant="outlined" onChange={(event)=>{this.updateAmount(event.target.value)}} />
-                          <Button onClick={this.MintToken} variant="contained" color="primary">Mint Tokens</Button>
+                          <Grid container spacing={3}>
+                            <Grid item xs={2}>
+                              <img src="/money.png"/>
+                            </Grid>
+                            <Grid item xs={6}>
+                              <TextField label="Increase Pool Supply" type="number" variant="outlined" onChange={(event)=>{this.updateAmount(event.target.value)}} />
+                            </Grid>
+                            
+                            <Grid item xs={4}>
+                              <Button onClick={this.AddToken} variant="contained" color="primary" disabled={this.state.SupplyButton}>Increase Supply</Button>
+                            </Grid>
+                          </Grid>  
                       </CardContent>
                     </Card>
                   </Grid>
+
+                  <Grid item xs={3}>
+                  </Grid>
+                  <Grid item xs = {3}>
+                  </Grid>
+
+                  <Grid item xs={6}>
+                    <Card variant="elevation">
+                      <CardContent>
+                          <Grid container spacing={3}>
+                            <Grid item xs={2}>
+                              <img src="/bank.png"/>
+                            </Grid>
+                            <Grid item xs={6}>
+                              <Typography variant="h5">
+                                Premium Earned: {this.state.premium}
+                              </Typography>
+                            </Grid>
+                            <Grid item xs={4}>
+                              <Button onClick={this.EarnPremium} variant="contained" color="secondary" disabled={this.state.PremiumButton}>Withdraw Premium</Button>
+                            </Grid>
+                          </Grid>  
+                      </CardContent>
+                    </Card>
+                  </Grid>
+
+                  <Grid item xs={3}>
+                  </Grid>
+                  <Grid item xs = {3}>
+                  </Grid>
+
+                  <Grid item xs={6}>
+                    <Card variant="elevation">
+                      <CardContent>
+                          <Grid container spacing={3}>
+                            <Grid item xs={2}>
+                              <img src="/locked.png"/>
+                            </Grid>
+                            <Grid item xs={6}>
+                              <Typography variant="h5">
+                                Locked Amount: {this.state.LockAmount}
+                              </Typography>
+                            </Grid>
+                            <Grid item xs={4}>
+                              <Button onClick={this.EarnAmount} variant="contained" color="primary" disabled={this.state.LockButton}>Withdraw Amount</Button>
+                            </Grid>
+                          </Grid>  
+                      </CardContent>
+                    </Card>
+                  </Grid>
+
                 </Grid>
               </ThemeProvider>
-              </div>
-              
-             
-            </div>
+              </div>             
+            </div>  
     )
   }
 

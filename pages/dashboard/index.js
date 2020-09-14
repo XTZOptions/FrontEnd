@@ -115,6 +115,13 @@ export default class extends Component {
     
     this.setState({MintAmount:amount,estimate:amount*Price*100})
   }
+
+  ChangeAccount = async() => {
+
+          console.log("Hell!");
+          console.log(Math.random());
+
+  }
   // static async getInitialProps(){
     
   //   const response = await axios.get("https://api.coinbase.com/v2/prices/XTZ-USD/sell");
@@ -158,17 +165,20 @@ export default class extends Component {
                       </Typography>
                     </Link>
                   </div>
-                 
-                  
+                  <div style={{'marginLeft':'5%'}}>
+                    <Button style={{'color':'white'}} variant="contained" color="primary" onClick={this.ChangeAccount}>
+                        Change Account
+                    </Button>
+                  </div>
                 </Toolbar>
               </AppBar>
               <div style={{'marginTop':'15%'}}>
               <ThemeProvider theme={theme}>
                 <Grid container spacing={3}>
-                  <Grid item xs={3}>
+                  <Grid item xs={3} sm={2}>
 
                   </Grid>
-                  <Grid item xs={3} >
+                  <Grid item xs={12} sm={4}>
                     <Card variant="elevation">
                       <CardContent>
                         <Grid container spacing={1}>
@@ -184,7 +194,7 @@ export default class extends Component {
                       </CardContent>
                     </Card>
                   </Grid>
-                  <Grid item xs={3}>
+                  <Grid item xs={12} sm={4}>
                     <Card variant="elevation">
                       <CardContent>
                       <Grid container spacing={1}>
@@ -200,13 +210,13 @@ export default class extends Component {
                       </CardContent>
                     </Card>
                   </Grid>
-                  <Grid item xs={3}>
+                  <Grid item xs={2}>
 
                   </Grid>
                   <Grid item xs = {3}>
 
                   </Grid>
-                  <Grid item xs={6}>
+                  <Grid item xs={12} sm={6}>
                     <Card variant="elevation">
                       <CardContent>
                           <Grid container spacing={3}>
