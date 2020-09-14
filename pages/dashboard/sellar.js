@@ -33,7 +33,8 @@ export default class extends Component {
     this.state = {wallet:null,tezos:null,token:null,options:null,balance:0,tokenBal:0,
       publicKey:null,Amount:0,estimate:0,
       poolSize:0,totalCapital:0,premium:0,
-      PremiumButton:true,SupplyButton:true
+      PremiumButton:true,SupplyButton:true,
+      LockAmount:0,LockButton:true,CycleTime:null
     };
     
    
@@ -93,6 +94,9 @@ export default class extends Component {
         const ALAToken = account.balance.toNumber();
       
         const optionsContract = await this.state.options.storage();
+        
+        this.setState({CycleTime:optionsContract.validation.cycleEnd});
+        
         const premium = await optionsContract.contractSellar.get(this.state.publicKey);
         
         
@@ -100,14 +104,13 @@ export default class extends Component {
         {
           if (premium.premium.toNumber() > 0 )
           {
-            console.log("Withdraw Premium"); 
             this.setState({premium:premium.premium.toNumber(),PremiumButton:false});
           }
-          else {
-
+          else
+          {
             this.setState({premium:0,PremiumButton:true});
-            console.log("Zero Premium");
           }
+          this.setState({LockAmount:premium.amount.toNumber()});
         }
         else {
           console.log("Undefined State");
@@ -137,7 +140,35 @@ export default class extends Component {
     {
           // const operation = await this.state.options.methods.WithdrawPremium().send();
           // await operation.confirmation();
+          console.log("Hello! World");
+          const available = await ThanosWallet.isAvailable();
+          if(available)
+          {
+            console.log("Available");
+            const wallet = new ThanosWallet("My Super DApp");
+            await wallet.connect("carthagenet");
+            const tezos = wallet.toTezos();
+
+          }
           
+
+
+    }
+
+  }
+
+  ChangeAccount = async() => {
+    const available = await ThanosWallet.isAvailable();
+    if(available)
+    {
+      console.log("Available");
+      var wallet = new ThanosWallet("My Super DApp");
+      await wallet.connect("carthagenet");
+      var tezos = wallet.toTezos();
+      
+      wallet = null; 
+      tezos = null ;
+      
     }
 
   }
@@ -188,14 +219,17 @@ export default class extends Component {
                       </Typography>
                     </Link>
                   </div>
-                 
-                  
+                  <div style={{'marginLeft':'5%'}}>
+                    <Button style={{'color':'white'}} variant="contained" color="primary" onClick={this.ChangeAccount}>
+                        Change Account
+                    </Button>
+                  </div>
                 </Toolbar>
               </AppBar>
-              <div style={{'marginTop':'10%'}}>
+              <div style={{'marginTop':'6%'}}>
               <ThemeProvider theme={theme}>
                 <Grid container spacing={3}>
-                  <Grid item xs={3}>
+                  <Grid item xs={1}>
 
                   </Grid>
                   <Grid item xs={3} >
@@ -230,8 +264,21 @@ export default class extends Component {
                       </CardContent>
                     </Card>
                   </Grid>
-                  <Grid item xs={3}>
-
+                  <Grid item xs={4}>
+                  <Card variant="elevation">
+                      <CardContent>
+                      <Grid container spacing={1}>
+                          <Grid item xs={3}>
+                          <img src="/countdown.png"/>
+                          </Grid>
+                          <Grid item xs={9}>
+                           <Typography variant="h6" >
+                            Cycle End :{this.state.CycleTime} 
+                            </Typography>
+                          </Grid>
+                        </Grid>
+                      </CardContent>
+                    </Card>
                   </Grid>
                   <Grid item xs = {3}>
 
@@ -254,6 +301,7 @@ export default class extends Component {
                       </CardContent>
                     </Card>
                   </Grid>
+
                   <Grid item xs={3}>
                   </Grid>
                   <Grid item xs = {3}>
@@ -278,6 +326,32 @@ export default class extends Component {
                       </CardContent>
                     </Card>
                   </Grid>
+
+                  <Grid item xs={3}>
+                  </Grid>
+                  <Grid item xs = {3}>
+                  </Grid>
+
+                  <Grid item xs={6}>
+                    <Card variant="elevation">
+                      <CardContent>
+                          <Grid container spacing={3}>
+                            <Grid item xs={2}>
+                              <img src="/locked.png"/>
+                            </Grid>
+                            <Grid item xs={6}>
+                              <Typography variant="h5">
+                                Locked Amount: {this.state.LockAmount}
+                              </Typography>
+                            </Grid>
+                            <Grid item xs={4}>
+                              <Button onClick={this.EarnPremium} variant="contained" color="primary" disabled={this.state.LockButton}>Withdraw Amount</Button>
+                            </Grid>
+                          </Grid>  
+                      </CardContent>
+                    </Card>
+                  </Grid>
+
                 </Grid>
               </ThemeProvider>
               </div>             
