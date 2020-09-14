@@ -31,7 +31,7 @@ export default class extends Component {
 
 
     this.state = {wallet:null,tezos:null,token:null,options:null,balance:0,tokenBal:0,
-      publicKey:null,Amount:0,estimate:0,poolSize:0,totalCapital:0,premium:10};
+      publicKey:null,Amount:0,estimate:0,poolSize:0,totalCapital:0,premium:0};
    
   }
 
@@ -146,16 +146,16 @@ export default class extends Component {
                     Options Platform
                   </Typography>
                   <div style={{'marginLeft':'45%'}}>
-                    <Link href="/dashboard/sellar">
+                    <Link href="/dashboard">
                       <Typography variant="h6" className={useStyles.TypographyStyles}>
-                        Sell Options
+                        Dashboard
                       </Typography>
                     </Link>
                   </div>
                   <div style={{'marginLeft':'5%'}}>
                     <Link href="/dashboard/buyer">
                       <Typography variant="h6" className={useStyles.TypographyStyles}>
-                        Purchase Options
+                        Purchase Security
                       </Typography>
                     </Link>
                   </div>

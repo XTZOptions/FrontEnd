@@ -126,16 +126,16 @@ export default class extends Component {
                     Options Platform
                   </Typography>
                   <div style={{'marginLeft':'45%'}}>
-                    <Link href="/dashboard/sellar">
+                    <Link href="/dashboard">
                       <Typography variant="h6" className={useStyles.TypographyStyles}>
-                        Sell Options
+                        Dashboard
                       </Typography>
                     </Link>
                   </div>
                   <div style={{'marginLeft':'5%'}}>
-                    <Link href="/dashboard/buyer">
+                    <Link href="/dashboard/sellar">
                       <Typography variant="h6" className={useStyles.TypographyStyles}>
-                        Purchase Options
+                        Sell Security
                       </Typography>
                     </Link>
                   </div>

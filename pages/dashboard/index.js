@@ -130,14 +130,14 @@ export default class extends Component {
                   <div style={{'marginLeft':'45%'}}>
                     <Link href="/dashboard/sellar">
                       <Typography variant="h6" className={useStyles.TypographyStyles}>
-                        Sell Options
+                        Sell Security
                       </Typography>
                     </Link>
                   </div>
                   <div style={{'marginLeft':'5%'}}>
                     <Link href="/dashboard/buyer">
                       <Typography variant="h6" className={useStyles.TypographyStyles}>
-                        Purchase Options
+                        Purchase Security
                       </Typography>
                     </Link>
                   </div>
