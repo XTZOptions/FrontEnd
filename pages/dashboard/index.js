@@ -105,11 +105,15 @@ export default class extends Component {
     }
     
       }
-  updateAmount = (amount)=>{
+  updateAmount = async(amount)=>{
     
     console.log(amount);
-    amount = parseInt(amount)
-    this.setState({MintAmount:amount,estimate:amount*400})
+    amount = parseInt(amount);
+
+    const response = await axios.get("https://api.coinbase.com/v2/prices/XTZ-USD/sell");
+    const Price = parseInt(response.data.data.amount*100)
+    
+    this.setState({MintAmount:amount,estimate:amount*Price*100})
   }
   // static async getInitialProps(){
     
@@ -214,7 +218,7 @@ export default class extends Component {
                             </Grid>
                             <Grid item xs={4}>
                               <Typography variant="h5">
-                                Estimated Tokens: {this.state.estimate}
+                                Tokens: {this.state.estimate}
                               </Typography>
                             </Grid>
                             <Grid item xs={3}>
