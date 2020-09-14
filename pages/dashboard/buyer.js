@@ -127,9 +127,11 @@ export default class extends Component {
               </Head>
               <AppBar position="fixed"  theme={theme}>
                 <Toolbar>
+                <Link href="/dashboard">
                   <Typography variant="h6" className={useStyles.TypographyStyles}>
                     Vikalp
                   </Typography>
+                  </Link>
                   <div style={{'marginLeft':'45%'}}>
                     <Link href="/dashboard">
                       <Typography variant="h6" className={useStyles.TypographyStyles}>
