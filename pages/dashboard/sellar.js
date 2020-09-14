@@ -10,7 +10,7 @@ import Paper from '@material-ui/core/Paper';
 import CardContent from '@material-ui/core/CardContent';
 
 import Link from 'next/link';
-
+import Head from 'next/head';
 
 const useStyles = makeStyles({
     helloThereStyle:{
@@ -31,7 +31,11 @@ export default class extends Component {
 
 
     this.state = {wallet:null,tezos:null,token:null,options:null,balance:0,tokenBal:0,
-      publicKey:null,Amount:0,estimate:0,poolSize:0,totalCapital:0,premium:0};
+      publicKey:null,Amount:0,estimate:0,
+      poolSize:0,totalCapital:0,premium:0,
+      PremiumButton:true,SupplyButton:true
+    };
+    
    
   }
 
@@ -55,7 +59,7 @@ export default class extends Component {
       const options = await tezos.wallet.at("KT1Wo8GDGJgzgZWmRXWfpWpEhho8wUPp9eAR");
       const  accountPkh = await tezos.wallet.pkh();
 
-      this.setState({wallet:wallet,tezos:tezos,token:token,options:options,publicKey:accountPkh});
+      this.setState({wallet:wallet,tezos:tezos,token:token,options:options,publicKey:accountPkh,SupplyButton:false});
 
       
     }
@@ -87,8 +91,30 @@ export default class extends Component {
         const account = await data.ledger.get(accountPkh);
         
         const ALAToken = account.balance.toNumber();
+      
+        const optionsContract = await this.state.options.storage();
+        const premium = await optionsContract.contractSellar.get(this.state.publicKey);
+        
+        
+        if (premium != undefined )
+        {
+          if (premium.premium.toNumber() > 0 )
+          {
+            console.log("Withdraw Premium"); 
+            this.setState({premium:premium.premium.toNumber(),PremiumButton:false});
+          }
+          else {
+
+            this.setState({premium:0,PremiumButton:true});
+            console.log("Zero Premium");
+          }
+        }
+        else {
+          console.log("Undefined State");
+        }
         
         this.setState({poolSize:val.poolSet.length,totalCapital:capital});
+      
       }
       
   }
@@ -109,11 +135,9 @@ export default class extends Component {
 
     if (this.state.token != null)
     {
-          console.log(this.state.options);
           // const operation = await this.state.options.methods.WithdrawPremium().send();
           // await operation.confirmation();
-
-          console.log("Withdraw Premium");
+          
     }
 
   }
@@ -140,10 +164,15 @@ export default class extends Component {
     
     return (
             <div>
+              <Head>
+                <title>
+                  Vikalp Options Platform
+                </title>
+              </Head>
               <AppBar position="fixed"  theme={theme}>
                 <Toolbar>
                   <Typography variant="h6" className={useStyles.TypographyStyles}>
-                    Options Platform
+                    Vikalp
                   </Typography>
                   <div style={{'marginLeft':'45%'}}>
                     <Link href="/dashboard">
@@ -219,7 +248,7 @@ export default class extends Component {
                             </Grid>
                             
                             <Grid item xs={4}>
-                              <Button onClick={this.AddToken} variant="contained" color="primary">Increase Supply</Button>
+                              <Button onClick={this.AddToken} variant="contained" color="primary" disabled={this.state.SupplyButton}>Increase Supply</Button>
                             </Grid>
                           </Grid>  
                       </CardContent>
@@ -239,11 +268,11 @@ export default class extends Component {
                             </Grid>
                             <Grid item xs={6}>
                               <Typography variant="h5">
-                                Estimated Premium: {this.state.premium}
+                                Premium Earned: {this.state.premium}
                               </Typography>
                             </Grid>
                             <Grid item xs={4}>
-                              <Button onClick={this.EarnPremium} variant="contained" color="secondary">Withdraw Premium</Button>
+                              <Button onClick={this.EarnPremium} variant="contained" color="secondary" disabled={this.state.PremiumButton}>Withdraw Premium</Button>
                             </Grid>
                           </Grid>  
                       </CardContent>

@@ -10,7 +10,7 @@ import Paper from '@material-ui/core/Paper';
 import CardContent from '@material-ui/core/CardContent';
 
 import Link from 'next/link';
-
+import Head from 'next/head';
 
 const useStyles = makeStyles({
     helloThereStyle:{
@@ -120,10 +120,15 @@ export default class extends Component {
     
     return (
             <div>
+              <Head>
+                <title>
+                  Vikalp Platform
+                </title>
+              </Head>
               <AppBar position="fixed"  theme={theme}>
                 <Toolbar>
                   <Typography variant="h6" className={useStyles.TypographyStyles}>
-                    Options Platform
+                    Vikalp
                   </Typography>
                   <div style={{'marginLeft':'45%'}}>
                     <Link href="/dashboard">

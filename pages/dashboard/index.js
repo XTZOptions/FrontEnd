@@ -10,7 +10,7 @@ import Paper from '@material-ui/core/Paper';
 import CardContent from '@material-ui/core/CardContent';
 
 import Link from 'next/link';
-
+import Head from 'next/head';
 
 const useStyles = makeStyles({
     helloThereStyle:{
@@ -31,7 +31,7 @@ export default class extends Component {
 
 
     this.state = {wallet:null,tezos:null,token:null,options:null,balance:0,tokenBal:0,
-      publicKey:null,MintAmount:0,estimate:0};
+      publicKey:null,MintAmount:0,estimate:0,MintButton:true};
    
   }
 
@@ -48,14 +48,18 @@ export default class extends Component {
     {
 
       await ThanosWallet.isAvailable();
+
       const wallet = new ThanosWallet("Vikalp Platform");
       await wallet.connect("carthagenet");
+      
       const tezos = wallet.toTezos();
+      
       const token = await tezos.wallet.at("KT1KtyJeL78tdHnzwCPE8M14WDb1zqsnLkjQ");
       const options = await tezos.wallet.at("KT1Wo8GDGJgzgZWmRXWfpWpEhho8wUPp9eAR");
+      
       const  accountPkh = await tezos.wallet.pkh();
 
-      this.setState({wallet:wallet,tezos:tezos,token:token,options:options,publicKey:accountPkh});
+      this.setState({wallet:wallet,tezos:tezos,token:token,options:options,publicKey:accountPkh,MintButton:false});
 
       
     }
@@ -76,8 +80,10 @@ export default class extends Component {
         const  amount = await this.state.tezos.tz.getBalance(accountPkh);
 
         var balance =  this.state.tezos.format('mutez','tz',amount).toString();
+
         balance = parseFloat(balance);
         balance = balance.toFixed(2);
+        
         const data = await this.state.token.storage();
         const account = await data.ledger.get(accountPkh);
         
@@ -122,10 +128,15 @@ export default class extends Component {
     
     return (
             <div>
+              <Head>
+                <title>
+                  Vikalp Platform
+                </title>
+              </Head>
               <AppBar position="fixed"  theme={theme}>
                 <Toolbar>
                   <Typography variant="h6" className={useStyles.TypographyStyles}>
-                    Options Platform
+                    Vikalp
                   </Typography>
                   <div style={{'marginLeft':'45%'}}>
                     <Link href="/dashboard/sellar">
@@ -205,7 +216,7 @@ export default class extends Component {
                               </Typography>
                             </Grid>
                             <Grid item xs={3}>
-                              <Button onClick={this.MintToken} variant="contained" color="primary">Mint Tokens</Button>
+                              <Button onClick={this.MintToken} variant="contained" color="primary" disabled={this.state.MintButton}>Mint Tokens</Button>
                             </Grid>
                           </Grid>  
                       </CardContent>
