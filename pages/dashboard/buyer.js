@@ -8,6 +8,7 @@ import {makeStyles} from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import Paper from '@material-ui/core/Paper';
 import CardContent from '@material-ui/core/CardContent';
+import Slider from '@material-ui/core/Slider';
 
 import Link from 'next/link';
 import Head from 'next/head';
@@ -34,10 +35,28 @@ export default class extends Component {
       publicKey:null,Amount:0,estimate:0,
       poolSize:0,totalCapital:0,premium:0,
       PremiumButton:true,SupplyButton:true,
-      LockAmount:0,LockButton:true,CycleTime:null
+      LockAmount:0,LockButton:true,CycleTime:null,
+      xtzPrice:4,StrikePrice:0,Duration:0
     };
-    
    
+  }
+  valuetext = (value)=>{
+
+    return `${value} Week`;
+  }
+
+  DurationChange = (event,value) => {
+  
+    this.setState({Duration:value});
+    console.log(value);
+  
+  }
+
+  StrikePriceChange = (event,value) => {
+    
+    this.setState({StrikePrice:value});
+    console.log(value);
+  
   }
 
   componentDidMount()
@@ -100,22 +119,7 @@ export default class extends Component {
         const premium = await optionsContract.contractSellar.get(this.state.publicKey);
         
         
-        if (premium != undefined )
-        {
-          if (premium.premium.toNumber() > 0 )
-          {
-            this.setState({premium:premium.premium.toNumber(),PremiumButton:false});
-          }
-          else
-          {
-            this.setState({premium:0,PremiumButton:true});
-          }
-          this.setState({LockAmount:premium.amount.toNumber()});
-        }
-        else {
-          console.log("Undefined State");
-        }
-        
+       
         this.setState({poolSize:val.poolSet.length,totalCapital:capital});
       
       }
@@ -265,29 +269,44 @@ export default class extends Component {
                       </CardContent>
                     </Card>
                   </Grid>
-                  <Grid item xs = {3}>
-
+                  <Grid item xs = {2}>
                   </Grid>
-                  <Grid item xs={6}>
+                  <Grid item xs={8}>
                     <Card variant="elevation">
                       <CardContent>
                           <Grid container spacing={3}>
                             <Grid item xs={2}>
                               <img src="/money.png"/>
                             </Grid>
-                            <Grid item xs={6}>
-                              <TextField label="Increase Pool Supply" type="number" variant="outlined" onChange={(event)=>{this.updateAmount(event.target.value)}} />
+                            <Grid item xs={4}>
+                              <TextField label="Options Quantity" type="number" variant="outlined" onChange={(event)=>{this.updateAmount(event.target.value)}} />
                             </Grid>
                             
-                            <Grid item xs={4}>
-                              <Button onClick={this.AddToken} variant="contained" color="primary" disabled={this.state.SupplyButton}>Increase Supply</Button>
+                            <Grid item xs={5}>
+                              <div style={{'marginTop':'2%'}}>
+                              <Typography>
+                                Contract Duration (in Weeks)
+                              </Typography>
+                             
+                              <Slider
+                                  defaultValue={2}
+                                  getAriaValueText={this.valuetext}
+                                  aria-labelledby="discrete-slider"
+                                  valueLabelDisplay="auto"
+                                  step={1}
+                                  marks
+                                  min={1}
+                                  max={3}
+                                  onChange={this.DurationChange}
+                              />
+                              </div>
                             </Grid>
                           </Grid>  
                       </CardContent>
                     </Card>
                   </Grid>
 
-                  <Grid item xs={3}>
+                  <Grid item xs={2}>
                   </Grid>
                   <Grid item xs = {3}>
                   </Grid>
@@ -299,24 +318,37 @@ export default class extends Component {
                             <Grid item xs={2}>
                               <img src="/bank.png"/>
                             </Grid>
-                            <Grid item xs={6}>
+                            <Grid item xs={4}>
                               <Typography variant="h5">
-                                Premium Earned: {this.state.premium}
+                               Strike Price
                               </Typography>
                             </Grid>
-                            <Grid item xs={4}>
-                              <Button onClick={this.EarnPremium} variant="contained" color="secondary" disabled={this.state.PremiumButton}>Withdraw Premium</Button>
+                            <Grid item xs={5}>
+                            <div style={{'marginTop':'2%'}}>
+                              <Typography>
+                                XTZ Price (in USD)
+                              </Typography>    
+                              <Slider
+                                  defaultValue={2}
+                                  getAriaValueText={this.valuetext}
+                                  aria-labelledby="discrete-slider"
+                                  valueLabelDisplay="auto"
+                                  step={this.state.xtzPrice*0.05}
+                                  marks
+                                  min={this.state.xtzPrice*0.90}
+                                  max={this.state.xtzPrice*1.10}
+                                  onChange={this.StrikePriceChange}
+                              />
+                              </div>
                             </Grid>
                           </Grid>  
                       </CardContent>
                     </Card>
                   </Grid>
-
                   <Grid item xs={3}>
                   </Grid>
                   <Grid item xs = {3}>
                   </Grid>
-
                   <Grid item xs={6}>
                     <Card variant="elevation">
                       <CardContent>
@@ -326,17 +358,16 @@ export default class extends Component {
                             </Grid>
                             <Grid item xs={6}>
                               <Typography variant="h5">
-                                Locked Amount: {this.state.LockAmount}
+                                Break Even Price: {this.state.LockAmount}
                               </Typography>
                             </Grid>
                             <Grid item xs={4}>
-                              <Button onClick={this.EarnAmount} variant="contained" color="primary" disabled={this.state.LockButton}>Withdraw Amount</Button>
+                              <Button onClick={this.EarnAmount} variant="contained" color="primary" disabled={this.state.LockButton}>Buy Security</Button>
                             </Grid>
                           </Grid>  
                       </CardContent>
                     </Card>
                   </Grid>
-
                 </Grid>
               </ThemeProvider>
               </div>             

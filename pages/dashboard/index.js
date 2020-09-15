@@ -109,11 +109,17 @@ export default class extends Component {
     
     console.log(amount);
     amount = parseInt(amount);
-
-    const response = await axios.get("https://api.coinbase.com/v2/prices/XTZ-USD/sell");
-    const Price = parseInt(response.data.data.amount*100)
+    if (amount > 0 )
+    {
+      const response = await axios.get("https://api.coinbase.com/v2/prices/XTZ-USD/sell");
+      const Price = parseInt(response.data.data.amount*100)
+      
+      this.setState({MintAmount:amount,estimate:amount*Price*100});
+    }
+    else {
+      this.setState({MintAmount:0,estimate:0});
+    }
     
-    this.setState({MintAmount:amount,estimate:amount*Price*100})
   }
 
   ChangeAccount = async() => {
