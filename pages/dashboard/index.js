@@ -86,10 +86,18 @@ export default class extends Component {
         
         const data = await this.state.token.storage();
         const account = await data.ledger.get(accountPkh);
+        console.log(account != undefined);
+        if(account != undefined)
+        {
         
-        const ALAToken = account.balance.toNumber();
+          const ALAToken = account.balance.toNumber();
+          this.setState({balance:balance,tokenBal:ALAToken});
+        }
+        else{
+          this.setState({balance:balance,tokenBal:0});
         
-        this.setState({balance:balance,tokenBal:ALAToken});
+        }
+        
       }
       
   }
@@ -124,8 +132,19 @@ export default class extends Component {
 
   ChangeAccount = async() => {
 
-          console.log("Hell!");
-          console.log(Math.random());
+    await ThanosWallet.isAvailable();
+    console.log("asd");
+    const wallet = new ThanosWallet("Vikalp");
+    await wallet.connect("carthagenet");
+    
+    const tezos = wallet.toTezos();
+    
+    const token = await tezos.wallet.at("KT1KtyJeL78tdHnzwCPE8M14WDb1zqsnLkjQ");
+    const options = await tezos.wallet.at("KT1Wo8GDGJgzgZWmRXWfpWpEhho8wUPp9eAR");
+    
+    const  accountPkh = await tezos.wallet.pkh();
+
+    this.setState({wallet:wallet,tezos:tezos,token:token,options:options,publicKey:accountPkh,MintButton:false});
 
   }
   // static async getInitialProps(){

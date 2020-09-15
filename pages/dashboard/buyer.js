@@ -34,8 +34,7 @@ export default class extends Component {
     this.state = {wallet:null,tezos:null,token:null,options:null,balance:0,tokenBal:0,
       publicKey:null,Amount:0,estimate:0,
       poolSize:0,totalCapital:0,premium:0,
-      PremiumButton:true,SupplyButton:true,
-      LockAmount:0,LockButton:true,CycleTime:null,
+      PremiumButton:true,LockAmount:0,LockButton:true,CycleTime:null,
       xtzPrice:4,StrikePrice:0,Duration:0
     };
    
@@ -79,7 +78,7 @@ export default class extends Component {
       const options = await tezos.wallet.at("KT1Wo8GDGJgzgZWmRXWfpWpEhho8wUPp9eAR");
       const  accountPkh = await tezos.wallet.pkh();
 
-      this.setState({wallet:wallet,tezos:tezos,token:token,options:options,publicKey:accountPkh,SupplyButton:false});
+      this.setState({wallet:wallet,tezos:tezos,token:token,options:options,publicKey:accountPkh});
 
       
     }
@@ -171,11 +170,16 @@ export default class extends Component {
     }
 
   }
+  
   updateAmount = (amount)=>{
     
-    console.log(amount);
-    amount = parseInt(amount)
-    this.setState({Amount:amount})
+    amount = parseInt(amount);
+    if (amount > 0)
+    {
+      console.log(amount);
+      this.setState({Amount:amount});
+    }
+    this.setState({Amount:0});
   }
 
   render(){
