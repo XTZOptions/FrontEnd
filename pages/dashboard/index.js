@@ -31,7 +31,7 @@ export default class extends Component {
 
 
     this.state = {wallet:null,tezos:null,token:null,options:null,balance:0,tokenBal:0,
-      publicKey:null,MintAmount:0,estimate:0,MintButton:true};
+      publicKey:null,MintAmount:0,estimate:0,MintButton:true,Counter:1};
    
   }
 
@@ -39,7 +39,7 @@ export default class extends Component {
   {
     this.WalletConfigure();
   
-    this.timer = setInterval(()=> this.ValueUpdate(), 5000);
+    this.timer = setInterval(()=> this.ValueUpdate(), 2000);
   }
 
   WalletConfigure = async() => {
@@ -95,7 +95,6 @@ export default class extends Component {
         }
         else{
           this.setState({balance:balance,tokenBal:0});
-        
         }
         
       }
@@ -134,7 +133,9 @@ export default class extends Component {
 
     await ThanosWallet.isAvailable();
     console.log("asd");
-    const wallet = new ThanosWallet("Vikalp");
+    var AppName = `Vikalp Account ${this.state.Counter}`; 
+
+    const wallet = new ThanosWallet(AppName);
     await wallet.connect("carthagenet");
     
     const tezos = wallet.toTezos();
@@ -144,7 +145,7 @@ export default class extends Component {
     
     const  accountPkh = await tezos.wallet.pkh();
 
-    this.setState({wallet:wallet,tezos:tezos,token:token,options:options,publicKey:accountPkh,MintButton:false});
+    this.setState({wallet:wallet,tezos:tezos,token:token,options:options,publicKey:accountPkh,MintButton:false,Counter:this.state.Counter+1});
 
   }
   // static async getInitialProps(){

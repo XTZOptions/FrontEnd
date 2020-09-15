@@ -170,7 +170,7 @@ export default class extends Component {
     }
 
   }
-  
+
   updateAmount = (amount)=>{
     
     amount = parseInt(amount);
@@ -289,18 +289,18 @@ export default class extends Component {
                             <Grid item xs={5}>
                               <div style={{'marginTop':'2%'}}>
                               <Typography>
-                                Contract Duration (in Weeks)
+                                Contract Duration : {this.state.Duration} Days
                               </Typography>
                              
                               <Slider
-                                  defaultValue={2}
+                                  defaultValue={14}
                                   getAriaValueText={this.valuetext}
                                   aria-labelledby="discrete-slider"
                                   valueLabelDisplay="auto"
-                                  step={1}
+                                  step={7}
                                   marks
-                                  min={1}
-                                  max={3}
+                                  min={7}
+                                  max={21}
                                   onChange={this.DurationChange}
                               />
                               </div>
@@ -330,7 +330,7 @@ export default class extends Component {
                             <Grid item xs={5}>
                             <div style={{'marginTop':'2%'}}>
                               <Typography>
-                                XTZ Price (in USD)
+                                XTZ Price (in USD) : {this.state.StrikePrice} USD
                               </Typography>    
                               <Slider
                                   defaultValue={2}
