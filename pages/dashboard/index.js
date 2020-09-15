@@ -31,7 +31,7 @@ export default class extends Component {
 
 
     this.state = {wallet:null,tezos:null,token:null,options:null,balance:0,tokenBal:0,
-      publicKey:null,MintAmount:0,estimate:0,MintButton:true,Counter:1};
+      publicKey:"",MintAmount:0,estimate:0,MintButton:true,Counter:1};
    
   }
 
@@ -131,21 +131,25 @@ export default class extends Component {
 
   ChangeAccount = async() => {
 
-    await ThanosWallet.isAvailable();
-    console.log("asd");
-    var AppName = `Vikalp Account ${this.state.Counter}`; 
+    const available = await ThanosWallet.isAvailable();
+    if(available)
+    {
+      var AppName = `Vikalp Account ${this.state.Counter}`; 
 
-    const wallet = new ThanosWallet(AppName);
-    await wallet.connect("carthagenet");
+      const wallet = new ThanosWallet(AppName);
+      await wallet.connect("carthagenet");
+      
+      const tezos = wallet.toTezos();
+      
+      const token = await tezos.wallet.at("KT1KtyJeL78tdHnzwCPE8M14WDb1zqsnLkjQ");
+      const options = await tezos.wallet.at("KT1Wo8GDGJgzgZWmRXWfpWpEhho8wUPp9eAR");
+      
+      const  accountPkh = await tezos.wallet.pkh();
+  
+      this.setState({wallet:wallet,tezos:tezos,token:token,options:options,publicKey:accountPkh,MintButton:false,Counter:this.state.Counter+1});
+    }
     
-    const tezos = wallet.toTezos();
     
-    const token = await tezos.wallet.at("KT1KtyJeL78tdHnzwCPE8M14WDb1zqsnLkjQ");
-    const options = await tezos.wallet.at("KT1Wo8GDGJgzgZWmRXWfpWpEhho8wUPp9eAR");
-    
-    const  accountPkh = await tezos.wallet.pkh();
-
-    this.setState({wallet:wallet,tezos:tezos,token:token,options:options,publicKey:accountPkh,MintButton:false,Counter:this.state.Counter+1});
 
   }
   // static async getInitialProps(){
@@ -177,7 +181,7 @@ export default class extends Component {
                     Vikalp
                   </Typography>
                   </Link>
-                  <div style={{'marginLeft':'45%'}}>
+                  <div style={{'marginLeft':'25%'}}>
                     <Link href="/dashboard/sellar">
                       <Typography variant="h6" className={useStyles.TypographyStyles}>
                         Sell Security
@@ -190,6 +194,11 @@ export default class extends Component {
                         Purchase Security
                       </Typography>
                     </Link>
+                  </div>
+                  <div style={{'marginLeft':'5%'}}>
+                      <Typography variant="paragraph" className={useStyles.TypographyStyles}>
+                        {this.state.publicKey.substring(0,7) + "..." + this.state.publicKey.substring(32,36)} 
+                      </Typography>
                   </div>
                   <div style={{'marginLeft':'5%'}}>
                     <Button style={{'color':'white'}} variant="contained" color="primary" onClick={this.ChangeAccount}>

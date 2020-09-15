@@ -34,7 +34,7 @@ export default class extends Component {
       publicKey:null,Amount:0,estimate:0,
       poolSize:0,totalCapital:0,premium:0,
       PremiumButton:true,SupplyButton:true,
-      LockAmount:0,LockButton:true,CycleTime:null
+      LockAmount:0,LockButton:true,CycleTime:null,Counter:1
     };
     
    
@@ -44,7 +44,7 @@ export default class extends Component {
   {
     this.WalletConfigure();
   
-    this.timer = setInterval(()=> this.ValueUpdate(), 5000);
+    this.timer = setInterval(()=> this.ValueUpdate(), 2000);
   }
 
   WalletConfigure = async() => {
@@ -156,13 +156,19 @@ export default class extends Component {
     const available = await ThanosWallet.isAvailable();
     if(available)
     {
-      console.log("Available");
-      var wallet = new ThanosWallet("My Super DApp");
-      await wallet.connect("carthagenet");
-      var tezos = wallet.toTezos();
-      
-      wallet = null; 
-      tezos = null ;
+      var AppName = `Vikalp Account ${this.state.Counter}`; 
+
+    const wallet = new ThanosWallet(AppName);
+    await wallet.connect("carthagenet");
+    
+    const tezos = wallet.toTezos();
+    
+    const token = await tezos.wallet.at("KT1KtyJeL78tdHnzwCPE8M14WDb1zqsnLkjQ");
+    const options = await tezos.wallet.at("KT1Wo8GDGJgzgZWmRXWfpWpEhho8wUPp9eAR");
+    
+    const  accountPkh = await tezos.wallet.pkh();
+
+    this.setState({wallet:wallet,tezos:tezos,token:token,options:options,publicKey:accountPkh,SupplyButton:false,Counter:this.state.Counter+1});
       
     }
 
