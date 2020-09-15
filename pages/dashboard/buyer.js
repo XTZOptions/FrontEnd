@@ -32,10 +32,10 @@ export default class extends Component {
 
 
     this.state = {wallet:null,tezos:null,token:null,options:null,balance:0,tokenBal:0,
-      publicKey:null,Amount:0,estimate:0,
+      publicKey:"",Amount:0,estimate:0,
       poolSize:0,totalCapital:0,premium:0,
       PremiumButton:true,LockAmount:0,LockButton:true,CycleTime:null,
-      xtzPrice:4,StrikePrice:0,Duration:0
+      xtzPrice:4,StrikePrice:0,Duration:0,Counter:1
     };
    
   }
@@ -159,13 +159,19 @@ export default class extends Component {
     const available = await ThanosWallet.isAvailable();
     if(available)
     {
-      console.log("Available");
-      var wallet = new ThanosWallet("My Super DApp");
+      var AppName = `Vikalp Account ${this.state.Counter}`; 
+
+      const wallet = new ThanosWallet(AppName);
       await wallet.connect("carthagenet");
-      var tezos = wallet.toTezos();
       
-      wallet = null; 
-      tezos = null ;
+      const tezos = wallet.toTezos();
+      
+      const token = await tezos.wallet.at("KT1KtyJeL78tdHnzwCPE8M14WDb1zqsnLkjQ");
+      const options = await tezos.wallet.at("KT1Wo8GDGJgzgZWmRXWfpWpEhho8wUPp9eAR");
+      
+      const  accountPkh = await tezos.wallet.pkh();
+  
+      this.setState({wallet:wallet,tezos:tezos,token:token,options:options,publicKey:accountPkh,SupplyButton:false,Counter:this.state.Counter+1});
       
     }
 
@@ -198,7 +204,7 @@ export default class extends Component {
                     Vikalp
                   </Typography>
                   </Link>
-                  <div style={{'marginLeft':'45%'}}>
+                  <div style={{'marginLeft':'25%'}}>
                     <Link href="/dashboard">
                       <Typography variant="h6" className={useStyles.TypographyStyles}>
                         Dashboard
@@ -212,6 +218,14 @@ export default class extends Component {
                       </Typography>
                     </Link>
                   </div>
+                  <div style={{'marginLeft':'5%'}}>
+                    
+                      <Typography variant="paragraph" className={useStyles.TypographyStyles}>
+                      {this.state.publicKey.substring(0,7) + "..." + this.state.publicKey.substring(32,36)}
+                      </Typography>
+                    
+                  </div>
+
                   <div style={{'marginLeft':'5%'}}>
                     <Button style={{'color':'white'}} variant="contained" color="primary" onClick={this.ChangeAccount}>
                         Change Account

@@ -31,7 +31,7 @@ export default class extends Component {
 
 
     this.state = {wallet:null,tezos:null,token:null,options:null,balance:0,tokenBal:0,
-      publicKey:null,Amount:0,estimate:0,
+      publicKey:"",Amount:0,estimate:0,
       poolSize:0,totalCapital:0,premium:0,
       PremiumButton:true,SupplyButton:true,
       LockAmount:0,LockButton:true,CycleTime:null,Counter:1
@@ -208,7 +208,7 @@ export default class extends Component {
                     Vikalp
                   </Typography>
                   </Link>
-                  <div style={{'marginLeft':'45%'}}>
+                  <div style={{'marginLeft':'25%'}}>
                     <Link href="/dashboard">
                       <Typography variant="h6" className={useStyles.TypographyStyles}>
                         Dashboard
@@ -221,6 +221,11 @@ export default class extends Component {
                         Purchase Security
                       </Typography>
                     </Link>
+                  </div>
+                  <div style={{'marginLeft':'5%'}}>
+                      <Typography variant="paragraph" className={useStyles.TypographyStyles}>
+                      {this.state.publicKey.substring(0,7) + "..." + this.state.publicKey.substring(32,36)} 
+                      </Typography>
                   </div>
                   <div style={{'marginLeft':'5%'}}>
                     <Button style={{'color':'white'}} variant="contained" color="primary" onClick={this.ChangeAccount}>
