@@ -1,5 +1,4 @@
 import React,{Component} from 'react'; 
-import axios from 'axios';
 import { ThanosWallet } from "@thanos-wallet/dapp";
 import {Button,Typography,Grid,AppBar, Toolbar,TextField} from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/core/styles';
@@ -8,6 +7,14 @@ import {makeStyles} from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import Paper from '@material-ui/core/Paper';
 import CardContent from '@material-ui/core/CardContent';
+
+
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import Link from 'next/link';
 import Head from 'next/head';
@@ -30,8 +37,9 @@ export default class extends Component {
     super();
 
 
-    this.state = {wallet:null,tezos:null,token:null,options:null,balance:0,tokenBal:0,
-      publicKey:"",MintAmount:0,estimate:0,MintButton:true,Counter:1};
+    this.state = {wallet:null,tezos:null,token:null,options:null,oracle:null,
+      balance:0,tokenBal:0,publicKey:"",MintAmount:0,estimate:0,
+      MintButton:true,Counter:1,Dialog:false,DialogButton:true};
    
   }
 
@@ -54,12 +62,12 @@ export default class extends Component {
       
       const tezos = wallet.toTezos();
       
-      const token = await tezos.wallet.at("KT1KtyJeL78tdHnzwCPE8M14WDb1zqsnLkjQ");
+      const token = await tezos.wallet.at("KT1VBasnYjsQFvYgBfUJZN6v4i1MvSSBSSku");
       const options = await tezos.wallet.at("KT1Wo8GDGJgzgZWmRXWfpWpEhho8wUPp9eAR");
-      
+      const oracle = await tezos.wallet.at("KT1VdtsYRQLuoKpcM9DcZqr2YgbAkGQ5qCA7");
       const  accountPkh = await tezos.wallet.pkh();
 
-      this.setState({wallet:wallet,tezos:tezos,token:token,options:options,publicKey:accountPkh,MintButton:false});
+      this.setState({wallet:wallet,tezos:tezos,token:token,oracle:oracle,options:options,publicKey:accountPkh,MintButton:false});
 
       
     }
@@ -86,7 +94,7 @@ export default class extends Component {
         
         const data = await this.state.token.storage();
         const account = await data.ledger.get(accountPkh);
-        console.log(account != undefined);
+
         if(account != undefined)
         {
         
@@ -106,20 +114,22 @@ export default class extends Component {
       if (this.state.token != null)
     {
           const operation = await this.state.token.methods.mint(this.state.publicKey,this.state.MintAmount).send({amount:this.state.MintAmount});
-          await operation.confirmation();
 
+          this.setState({Dialog:true,DialogButton:true});
+          await operation.confirmation();
+          this.setState({DialogButton:false});
           console.log("Minted Token");
     }
     
       }
   updateAmount = async(amount)=>{
     
-    console.log(amount);
+    
     amount = parseInt(amount);
-    if (amount > 0 )
+    if (amount > 0 && this.state.oracle != null)
     {
-      const response = await axios.get("https://api.coinbase.com/v2/prices/XTZ-USD/sell");
-      const Price = parseInt(response.data.data.amount*100)
+      const response = await this.state.oracle.storage();
+      const Price = response.xtzPrice.toNumber();
       
       this.setState({MintAmount:amount,estimate:amount*Price*100});
     }
@@ -141,16 +151,20 @@ export default class extends Component {
       
       const tezos = wallet.toTezos();
       
-      const token = await tezos.wallet.at("KT1KtyJeL78tdHnzwCPE8M14WDb1zqsnLkjQ");
+      const token = await tezos.wallet.at("KT1VBasnYjsQFvYgBfUJZN6v4i1MvSSBSSku");
       const options = await tezos.wallet.at("KT1Wo8GDGJgzgZWmRXWfpWpEhho8wUPp9eAR");
-      
+      const oracle = await tezos.wallet.at("KT1VdtsYRQLuoKpcM9DcZqr2YgbAkGQ5qCA7");
       const  accountPkh = await tezos.wallet.pkh();
   
-      this.setState({wallet:wallet,tezos:tezos,token:token,options:options,publicKey:accountPkh,MintButton:false,Counter:this.state.Counter+1});
+      this.setState({wallet:wallet,tezos:tezos,token:token,options:options,oracle:oracle,publicKey:accountPkh,MintButton:false,Counter:this.state.Counter+1});
     }
     
     
 
+  }
+
+  handleClose = ()=> {
+    this.setState({Dialog:false});
   }
   // static async getInitialProps(){
     
@@ -196,7 +210,7 @@ export default class extends Component {
                     </Link>
                   </div>
                   <div style={{'marginLeft':'5%'}}>
-                      <Typography variant="paragraph" className={useStyles.TypographyStyles}>
+                      <Typography variant="body1" className={useStyles.TypographyStyles}>
                         {this.state.publicKey.substring(0,7) + "..." + this.state.publicKey.substring(32,36)} 
                       </Typography>
                   </div>
@@ -275,7 +289,34 @@ export default class extends Component {
                   </Grid>
                 </Grid>
               </ThemeProvider>
-              </div>             
+              </div>    
+              
+              <Dialog
+                open={this.state.Dialog}
+                onClose={this.handleClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+                disableBackdropClick={true}
+                disableEscapeKeyDown={true}
+              >
+              <DialogTitle id="alert-dialog-title">{"Minting ALA Tokens"}</DialogTitle>
+              <DialogContent>
+                <DialogContentText id="alert-dialog-description">
+                  <div style={{'marginLeft':'35%'}}>
+                    <CircularProgress/>
+                  </div>
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <div style={{'textAlign':'center'}}>
+                <Button onClick={this.handleClose} color="primary" variant="contained" disabled={this.state.DialogButton}>
+                  Exit
+                </Button>
+                </div>
+                
+              </DialogActions>
+            </Dialog>
+
             </div>
     )
   }
