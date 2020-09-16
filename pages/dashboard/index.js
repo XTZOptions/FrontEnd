@@ -37,7 +37,7 @@ export default class extends Component {
     super();
 
 
-    this.state = {wallet:null,tezos:null,token:null,options:null,oracle:null,
+    this.state = {wallet:null,tezos:null,token:null,oracle:null,
       balance:0,tokenBal:0,publicKey:"",MintAmount:0,estimate:0,
       MintButton:true,Counter:1,Dialog:false,DialogButton:true};
    
@@ -63,11 +63,11 @@ export default class extends Component {
       const tezos = wallet.toTezos();
       
       const token = await tezos.wallet.at("KT1VBasnYjsQFvYgBfUJZN6v4i1MvSSBSSku");
-      const options = await tezos.wallet.at("KT1Wo8GDGJgzgZWmRXWfpWpEhho8wUPp9eAR");
+      
       const oracle = await tezos.wallet.at("KT1VdtsYRQLuoKpcM9DcZqr2YgbAkGQ5qCA7");
       const  accountPkh = await tezos.wallet.pkh();
 
-      this.setState({wallet:wallet,tezos:tezos,token:token,oracle:oracle,options:options,publicKey:accountPkh,MintButton:false});
+      this.setState({wallet:wallet,tezos:tezos,token:token,oracle:oracle,publicKey:accountPkh,MintButton:false});
 
       
     }
@@ -111,7 +111,7 @@ export default class extends Component {
 
   MintToken = async() => {
 
-      if (this.state.token != null)
+      if (this.state.token != null && this.state.MintAmount > 0)
     {
           const operation = await this.state.token.methods.mint(this.state.publicKey,this.state.MintAmount).send({amount:this.state.MintAmount});
 
@@ -152,11 +152,11 @@ export default class extends Component {
       const tezos = wallet.toTezos();
       
       const token = await tezos.wallet.at("KT1VBasnYjsQFvYgBfUJZN6v4i1MvSSBSSku");
-      const options = await tezos.wallet.at("KT1Wo8GDGJgzgZWmRXWfpWpEhho8wUPp9eAR");
+      
       const oracle = await tezos.wallet.at("KT1VdtsYRQLuoKpcM9DcZqr2YgbAkGQ5qCA7");
       const  accountPkh = await tezos.wallet.pkh();
   
-      this.setState({wallet:wallet,tezos:tezos,token:token,options:options,oracle:oracle,publicKey:accountPkh,MintButton:false,Counter:this.state.Counter+1});
+      this.setState({wallet:wallet,tezos:tezos,token:token,oracle:oracle,publicKey:accountPkh,MintButton:false,Counter:this.state.Counter+1});
     }
     
     
