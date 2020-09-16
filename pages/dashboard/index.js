@@ -39,7 +39,7 @@ export default class extends Component {
 
     this.state = {wallet:null,tezos:null,token:null,oracle:null,
       balance:0,tokenBal:0,publicKey:"",MintAmount:0,estimate:0,
-      MintButton:true,Counter:1,Dialog:false,DialogButton:true};
+      MintButton:true,Counter:1,Dialog:false};
    
   }
 
@@ -115,9 +115,9 @@ export default class extends Component {
     {
           const operation = await this.state.token.methods.mint(this.state.publicKey,this.state.MintAmount).send({amount:this.state.MintAmount});
 
-          this.setState({Dialog:true,DialogButton:true});
+          this.setState({Dialog:true});
           await operation.confirmation();
-          this.setState({DialogButton:false});
+          this.setState({Dialog:false});
           console.log("Minted Token");
     }
     
@@ -307,14 +307,6 @@ export default class extends Component {
                   </div>
                 </DialogContentText>
               </DialogContent>
-              <DialogActions>
-                <div style={{'textAlign':'center'}}>
-                <Button onClick={this.handleClose} color="primary" variant="contained" disabled={this.state.DialogButton}>
-                  Exit
-                </Button>
-                </div>
-                
-              </DialogActions>
             </Dialog>
 
             </div>

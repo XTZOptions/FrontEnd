@@ -9,6 +9,13 @@ import Card from '@material-ui/core/Card';
 import Paper from '@material-ui/core/Paper';
 import CardContent from '@material-ui/core/CardContent';
 
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import CircularProgress from '@material-ui/core/CircularProgress';
+
 import Link from 'next/link';
 import Head from 'next/head';
 
@@ -30,11 +37,12 @@ export default class extends Component {
     super();
 
 
-    this.state = {wallet:null,tezos:null,token:null,options:null,balance:0,tokenBal:0,
-      publicKey:"",Amount:0,estimate:0,
-      poolSize:0,totalCapital:0,premium:0,
+    this.state = {
+      wallet:null,tezos:null,token:null,options:null,balance:0,tokenBal:0,
+      publicKey:"",Amount:0,poolSize:0,totalCapital:0,premium:0,
       PremiumButton:true,SupplyButton:true,
-      LockAmount:0,LockButton:true,CycleTime:null,Counter:1
+      LockAmount:0,LockButton:true,CycleTime:null,Counter:1,
+      Dialog:false,DialogHeading:""
     };
     
    
@@ -56,8 +64,10 @@ export default class extends Component {
       const wallet = new ThanosWallet("Vikalp Platform");
       await wallet.connect("carthagenet");
       const tezos = wallet.toTezos();
-      const token = await tezos.wallet.at("KT1KtyJeL78tdHnzwCPE8M14WDb1zqsnLkjQ");
-      const options = await tezos.wallet.at("KT1Wo8GDGJgzgZWmRXWfpWpEhho8wUPp9eAR");
+
+      const token = await tezos.wallet.at("KT1VBasnYjsQFvYgBfUJZN6v4i1MvSSBSSku");
+      const options = await tezos.wallet.at("KT1WSitGbFN4kz3PriwqgThL2Fmq9Vg4XeTh");
+      
       const  accountPkh = await tezos.wallet.pkh();
 
       this.setState({wallet:wallet,tezos:tezos,token:token,options:options,publicKey:accountPkh,SupplyButton:false});
@@ -97,24 +107,33 @@ export default class extends Component {
         
         this.setState({CycleTime:optionsContract.validation.cycleEnd});
         
-        const premium = await optionsContract.contractSellar.get(this.state.publicKey);
-        
-        
-        if (premium != undefined )
-        {
-          if (premium.premium.toNumber() > 0 )
-          {
-            this.setState({premium:premium.premium.toNumber(),PremiumButton:false});
-          }
-          else
-          {
-            this.setState({premium:0,PremiumButton:true});
-          }
-          this.setState({LockAmount:premium.amount.toNumber()});
+        try {
+          
+            const premium = await optionsContract.contractSellar.get(this.state.publicKey);
+            
+            if (premium != undefined )
+            {
+              if (premium.premium.toNumber() > 0 )
+              {
+                this.setState({premium:premium.premium.toNumber(),PremiumButton:false});
+              }
+              else
+              {
+                this.setState({premium:0,PremiumButton:true});
+              }
+
+              this.setState({LockAmount:premium.amount.toNumber()});
+            }
+            else {
+              this.setState({LockAmount:0,premium:0,PremiumButton:true})
+              console.log("Undefined State");
+            }
+
+        } catch (error) {
+          
+          console.log("Value not present");
         }
-        else {
-          console.log("Undefined State");
-        }
+        
         
         this.setState({poolSize:val.poolSet.length,totalCapital:capital});
       
@@ -124,13 +143,20 @@ export default class extends Component {
 
   AddToken = async() => {
 
-      if (this.state.token != null)
+      if (this.state.token != null && this.state.Amount > 0 && this.state.Amount % 10000 == 0 )
     {
+
+          
           const operation = await this.state.options.methods.putSeller(this.state.Amount).send();
+          this.setState({Dialog:true,DialogHeading:"Add Supply to Contract"});
+          
           await operation.confirmation();
+          this.setState({Dialog:false});
 
           console.log("Added Supply");
     }
+
+      console.log("Input Error");
     
       }
 
@@ -144,7 +170,7 @@ export default class extends Component {
 
   }
 
-  EarnPremium = async() => {
+  EarnAmount = async() => {
     if(this.state.token != null)
     {
         // const operation = await this.state.options.methods.WithdrawPremium().send();
@@ -163,8 +189,8 @@ export default class extends Component {
     
     const tezos = wallet.toTezos();
     
-    const token = await tezos.wallet.at("KT1KtyJeL78tdHnzwCPE8M14WDb1zqsnLkjQ");
-    const options = await tezos.wallet.at("KT1Wo8GDGJgzgZWmRXWfpWpEhho8wUPp9eAR");
+    const token = await tezos.wallet.at("KT1VBasnYjsQFvYgBfUJZN6v4i1MvSSBSSku");
+    const options = await tezos.wallet.at("KT1WSitGbFN4kz3PriwqgThL2Fmq9Vg4XeTh");
     
     const  accountPkh = await tezos.wallet.pkh();
 
@@ -178,6 +204,11 @@ export default class extends Component {
     console.log(amount);
     amount = parseInt(amount)
     this.setState({Amount:amount})
+  }
+
+  handleClose = ()=>  {
+
+    this.setState({Dialog:false});
   }
   // static async getInitialProps(){
     
@@ -362,7 +393,27 @@ export default class extends Component {
 
                 </Grid>
               </ThemeProvider>
-              </div>             
+              </div>     
+              
+              <Dialog
+                open={this.state.Dialog}
+                onClose={this.handleClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+                disableBackdropClick={true}
+                disableEscapeKeyDown={true}
+              >
+              <DialogTitle id="alert-dialog-title">{this.state.DialogHeading}</DialogTitle>
+              <DialogContent>
+                <DialogContentText id="alert-dialog-description">
+                  <div style={{'marginLeft':'35%'}}>
+                    <CircularProgress/>
+                  </div>
+                </DialogContentText>
+              </DialogContent>
+            </Dialog>
+              
+                      
             </div>  
     )
   }
