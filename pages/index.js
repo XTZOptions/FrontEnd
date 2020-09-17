@@ -100,11 +100,11 @@ export default function Home() {
         <div className="container">
           <div className="main-text-wrapper">
             <h1>
-              Populer Crypto <br />
-              Revolution is begin <br />
+              Crypto securities<br />
+              Revolution is beginning <br />
               from here.
             </h1>
-            <p>A revolutionary digital securities platform for Tezos.</p>
+            <p>A revolutionary digital securities platform built on Tezos.</p>
             <ul className="button-group clearfix">
               <li>
                 <div className="btn-group">
@@ -177,21 +177,19 @@ export default function Home() {
             <div className="text">
               <div className="number">01</div>
               <h2 className="title">
-                <span>Decentralized</span> Minning Our core focus.
+                <span>Minning</span> made Easy.
               </h2>
               <p>
-                Mining should be fair &amp; easy! We do not allow ASICs on our
-                network. The development team is wholy commited to with keeping
-                it that way.
+                Mining should be fair &amp; easy! Any user can mint tokens by locking up their XTZ's.
               </p>
-              <a href="#" className="learn-more">
-                Learn More <i className="flaticon-right-thin" />
+              <a href="/dashboard" className="learn-more">
+                Mint Tokens <i className="flaticon-right-thin" />
               </a>
             </div>
           </div>
           <div className="col-lg-6 img-box">
             <div>
-              <img src="images/shape/1.png"  />
+              <img src="token.png"  />
             </div>
           </div>
         </div>
@@ -200,15 +198,13 @@ export default function Home() {
             <div className="text">
               <div className="number">02</div>
               <h2 className="title">
-                <span>Popular</span> Wallet Integration.
+                <span>Thanos</span> Wallet Integration.
               </h2>
               <p>
-                Mining should be fair &amp; easy! We do not allow ASICs on our
-                network. The development team is wholy commited to with keeping
-                it that way.
+                Users can view and transfer our tokens with the help of thanos wallet.
               </p>
-              <a href="#" className="learn-more">
-                Learn More <i className="flaticon-right-thin" />
+              <a className="learn-more">
+                Token Address: KT1CdcfvT8uBu8ZorXhP4EVtf8VNdPLZmafg
               </a>
             </div>
           
@@ -216,7 +212,7 @@ export default function Home() {
           
           <div className="col-lg-6 order-lg-first img-box">
             <div>
-              <img src="images/shape/1.1.png"  />
+              <img src="smartphone.png"  />
             </div>
           </div>
         </div>
@@ -226,25 +222,50 @@ export default function Home() {
             <div className="text">
               <div className="number">03</div>
               <h2 className="title">
-                <span>Upholding</span> Confidentialit &amp; Strong Security.
+                <span>Selling Security</span> made much Easy.
               </h2>
               <p>
-                Mining should be fair &amp; easy! We do not allow ASICs on our
-                network. The development team is wholy commited to with keeping
-                it that way.
+               Inside of traditional Marketplace where for each order there is one buyer and Seller. 
+               Our Platform introduces the concept of Liquidity Pool whereby each Sellar participates for each order on the platform.
               </p>
-              <a href="#" className="learn-more">
-                Learn More <i className="flaticon-right-thin" />
+              <a href="/dashboard/sellar" className="learn-more">
+                Sell Security <i className="flaticon-right-thin" />
               </a>
             </div>
            
           </div>
           <div className="col-lg-6 img-box">
             <div>
-              <img src="images/shape/2.png"  />
+              <img src="teamwork.png"  />
             </div>
           </div>
         </div>
+
+        <div className="row single-block">
+          <div className="col-lg-6 order-lg-last">
+            <div className="text">
+              <div className="number">04</div>
+              <h2 className="title">
+              <span>Purchase Security</span> at predefined Rates.
+              </h2>
+              <p>
+              Inside of traditional Marketplace where buyers look for premium and duration options. We have a predefined rates 
+               for StrikePrice and Premium which saves time and eradicates hidden charges.
+              </p>
+              <a href="/dashboard/buyer" className="learn-more">
+                Purchase Security <i className="flaticon-right-thin" />
+              </a>
+            </div>
+          
+          </div>
+          
+          <div className="col-lg-6 order-lg-first img-box">
+            <div>
+              <img src="liquidity.png"  />
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
     <div className="theme-counter">

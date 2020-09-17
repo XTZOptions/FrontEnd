@@ -65,8 +65,8 @@ export default class extends Component {
       await wallet.connect("carthagenet");
       const tezos = wallet.toTezos();
 
-      const token = await tezos.wallet.at("KT1VBasnYjsQFvYgBfUJZN6v4i1MvSSBSSku");
-      const options = await tezos.wallet.at("KT1WSitGbFN4kz3PriwqgThL2Fmq9Vg4XeTh");
+      const token = await tezos.wallet.at("KT1CdcfvT8uBu8ZorXhP4EVtf8VNdPLZmafg");
+      const options = await tezos.wallet.at("KT1XndceJUg2BDGywXz3x8GqTMjLjWQ7AB7g");
       
       const  accountPkh = await tezos.wallet.pkh();
 
@@ -189,8 +189,8 @@ export default class extends Component {
     
     const tezos = wallet.toTezos();
     
-    const token = await tezos.wallet.at("KT1VBasnYjsQFvYgBfUJZN6v4i1MvSSBSSku");
-    const options = await tezos.wallet.at("KT1WSitGbFN4kz3PriwqgThL2Fmq9Vg4XeTh");
+    const token = await tezos.wallet.at("KT1CdcfvT8uBu8ZorXhP4EVtf8VNdPLZmafg");
+    const options = await tezos.wallet.at("KT1XndceJUg2BDGywXz3x8GqTMjLjWQ7AB7g");
     
     const  accountPkh = await tezos.wallet.pkh();
 
@@ -254,7 +254,7 @@ export default class extends Component {
                     </Link>
                   </div>
                   <div style={{'marginLeft':'5%'}}>
-                      <Typography variant="paragraph" className={useStyles.TypographyStyles}>
+                      <Typography variant="body1" className={useStyles.TypographyStyles}>
                       {this.state.publicKey.substring(0,7) + "..." + this.state.publicKey.substring(32,36)} 
                       </Typography>
                   </div>
@@ -280,7 +280,7 @@ export default class extends Component {
                           </Grid>
                           <Grid item xs={8}>
                            <Typography variant="h6" >
-                              {this.state.totalCapital} Total Liquidity 
+                              Liquidity: {this.state.totalCapital} ALA Tokens 
                             </Typography>
                           </Grid>
                         </Grid>
@@ -296,7 +296,7 @@ export default class extends Component {
                           </Grid>
                           <Grid item xs={8}>
                            <Typography variant="h6" >
-                            {this.state.poolSize} Liquidity Providers
+                             Liquidity Providers: {this.state.poolSize}
                             </Typography>
                           </Grid>
                         </Grid>
@@ -354,8 +354,8 @@ export default class extends Component {
                               <img src="/bank.png"/>
                             </Grid>
                             <Grid item xs={6}>
-                              <Typography variant="h5">
-                                Premium Earned: {this.state.premium}
+                              <Typography variant="h6">
+                                Premium Earned: {this.state.premium} ALA Tokens
                               </Typography>
                             </Grid>
                             <Grid item xs={4}>
@@ -379,8 +379,8 @@ export default class extends Component {
                               <img src="/locked.png"/>
                             </Grid>
                             <Grid item xs={6}>
-                              <Typography variant="h5">
-                                Locked Amount: {this.state.LockAmount}
+                              <Typography variant="h6">
+                                Locked Amount: {this.state.LockAmount} ALA Tokens
                               </Typography>
                             </Grid>
                             <Grid item xs={4}>

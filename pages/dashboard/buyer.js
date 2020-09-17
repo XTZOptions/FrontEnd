@@ -35,10 +35,10 @@ export default class extends Component {
       publicKey:"",Amount:0,estimate:0,
       poolSize:0,totalCapital:0,premium:0,
       PremiumButton:true,LockAmount:0,LockButton:true,CycleTime:null,
-      xtzPrice:4,StrikePrice:0,Duration:0,Counter:1
+      xtzPrice:4,StrikePrice:0,Duration:14,Counter:1
     };
    
-  }
+  } 
   valuetext = (value)=>{
 
     return `${value} Week`;
@@ -74,8 +74,8 @@ export default class extends Component {
       const wallet = new ThanosWallet("Vikalp Platform");
       await wallet.connect("carthagenet");
       const tezos = wallet.toTezos();
-      const token = await tezos.wallet.at("KT1KtyJeL78tdHnzwCPE8M14WDb1zqsnLkjQ");
-      const options = await tezos.wallet.at("KT1Wo8GDGJgzgZWmRXWfpWpEhho8wUPp9eAR");
+      const token = await tezos.wallet.at("KT1VBasnYjsQFvYgBfUJZN6v4i1MvSSBSSku");
+      const options = await tezos.wallet.at("KT1WSitGbFN4kz3PriwqgThL2Fmq9Vg4XeTh");
       const  accountPkh = await tezos.wallet.pkh();
 
       this.setState({wallet:wallet,tezos:tezos,token:token,options:options,publicKey:accountPkh});
@@ -115,11 +115,11 @@ export default class extends Component {
         
         this.setState({CycleTime:optionsContract.validation.cycleEnd});
         
-        const premium = await optionsContract.contractSellar.get(this.state.publicKey);
+        // const premium = await optionsContract.contractSellar.get(this.state.publicKey);
         
         
        
-        this.setState({poolSize:val.poolSet.length,totalCapital:capital});
+        this.setState({poolSize:val.poolSet.length,totalCapital:capital,tokenBal:ALAToken});
       
       }
       
@@ -166,8 +166,8 @@ export default class extends Component {
       
       const tezos = wallet.toTezos();
       
-      const token = await tezos.wallet.at("KT1KtyJeL78tdHnzwCPE8M14WDb1zqsnLkjQ");
-      const options = await tezos.wallet.at("KT1Wo8GDGJgzgZWmRXWfpWpEhho8wUPp9eAR");
+      const token = await tezos.wallet.at("KT1VBasnYjsQFvYgBfUJZN6v4i1MvSSBSSku");
+      const options = await tezos.wallet.at("KT1WSitGbFN4kz3PriwqgThL2Fmq9Vg4XeTh");
       
       const  accountPkh = await tezos.wallet.pkh();
   
@@ -220,7 +220,7 @@ export default class extends Component {
                   </div>
                   <div style={{'marginLeft':'5%'}}>
                     
-                      <Typography variant="paragraph" className={useStyles.TypographyStyles}>
+                      <Typography variant="body1" className={useStyles.TypographyStyles}>
                       {this.state.publicKey.substring(0,7) + "..." + this.state.publicKey.substring(32,36)}
                       </Typography>
                     
@@ -260,11 +260,11 @@ export default class extends Component {
                       <CardContent>
                       <Grid container spacing={1}>
                           <Grid item xs={4}>
-                          <img src="/group.png"/>
+                          <img src="/countdown.png"/>
                           </Grid>
                           <Grid item xs={8}>
                            <Typography variant="h6" >
-                            {this.state.poolSize} Liquidity Providers
+                              Cycle End :{this.state.CycleTime}
                             </Typography>
                           </Grid>
                         </Grid>
@@ -276,11 +276,11 @@ export default class extends Component {
                       <CardContent>
                       <Grid container spacing={1}>
                           <Grid item xs={3}>
-                          <img src="/countdown.png"/>
+                          <img src="/money.png"/>
                           </Grid>
                           <Grid item xs={9}>
                            <Typography variant="h6" >
-                            Cycle End :{this.state.CycleTime} 
+                            Personal Balance :{this.state.tokenBal} 
                             </Typography>
                           </Grid>
                         </Grid>
