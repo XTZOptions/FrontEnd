@@ -74,8 +74,8 @@ export default class extends Component {
       const wallet = new ThanosWallet("Vikalp Platform");
       await wallet.connect("carthagenet");
       const tezos = wallet.toTezos();
-      const token = await tezos.wallet.at("KT1VBasnYjsQFvYgBfUJZN6v4i1MvSSBSSku");
-      const options = await tezos.wallet.at("KT1WSitGbFN4kz3PriwqgThL2Fmq9Vg4XeTh");
+      const token = await tezos.wallet.at("KT1CdcfvT8uBu8ZorXhP4EVtf8VNdPLZmafg");
+      const options = await tezos.wallet.at("KT1XndceJUg2BDGywXz3x8GqTMjLjWQ7AB7g");
       const  accountPkh = await tezos.wallet.pkh();
 
       this.setState({wallet:wallet,tezos:tezos,token:token,options:options,publicKey:accountPkh});
@@ -166,8 +166,8 @@ export default class extends Component {
       
       const tezos = wallet.toTezos();
       
-      const token = await tezos.wallet.at("KT1VBasnYjsQFvYgBfUJZN6v4i1MvSSBSSku");
-      const options = await tezos.wallet.at("KT1WSitGbFN4kz3PriwqgThL2Fmq9Vg4XeTh");
+      const token = await tezos.wallet.at("KT1CdcfvT8uBu8ZorXhP4EVtf8VNdPLZmafg");
+      const options = await tezos.wallet.at("KT1XndceJUg2BDGywXz3x8GqTMjLjWQ7AB7g");
       
       const  accountPkh = await tezos.wallet.pkh();
   

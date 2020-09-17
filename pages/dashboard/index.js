@@ -280,7 +280,7 @@ export default class extends Component {
                             </Grid>
                             <Grid item xs={4}>
                               <Typography variant="body1">
-                                Tokens: {this.state.estimate}
+                                Tokens: {this.state.estimate} ALA
                                 <br/>
                                 <br/>
                                 1 XTZ = {this.state.xtzPrice} ALA Tokens
