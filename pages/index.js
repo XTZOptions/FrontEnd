@@ -127,8 +127,8 @@ export default function Home() {
       <div className="container">
         <div className="theme-title">
           <h2>
-            The Largest &amp; Best <span>Digital Currency</span> <br />
-            for Your Future money
+            Upcoming <span>Securities Platform</span> <br />
+            for Your money
           </h2>
         </div>
         <div className="row">
@@ -137,9 +137,9 @@ export default function Home() {
               <div className="icon-box">
                 <img src="images/icon/5.png"  className="primary-icon" />
               </div>
-              <h3>cryto Is Untraceable</h3>
+              <h3>Token System</h3>
               <p>
-                Sending and receiving addresses as well as transacted amounts.
+                Token and Options are two different entities.
               </p>
             </div>
           </div>
@@ -150,8 +150,7 @@ export default function Home() {
               </div>
               <h3>Autonomy self-rule.</h3>
               <p>
-                cryto has striven to solve blockchain governance, transparency
-                brings
+                Platform has been made secure to outside manipulation
               </p>
             </div>
           </div>
@@ -162,8 +161,7 @@ export default function Home() {
               </div>
               <h3>Transparency &amp; Stability</h3>
               <p>
-                In crypto, transparency brings trust &amp; old strong
-                transparency
+                Viewing Premium and Total Supply is made completely transparent
               </p>
             </div>
           </div>
