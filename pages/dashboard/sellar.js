@@ -334,7 +334,7 @@ export default class extends Component {
                             </Grid>
                             
                             <Grid item xs={4}>
-                              <Button onClick={this.AddToken} variant="contained" color="primary" disabled={this.state.SupplyButton}>Increase Supply</Button>
+                              <Button onClick={this.AddToken} variant="contained" color="primary" disabled={true}>Increase Supply</Button>
                             </Grid>
                           </Grid>  
                       </CardContent>
