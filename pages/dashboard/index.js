@@ -62,9 +62,9 @@ export default class extends Component {
       
       const tezos = wallet.toTezos();
       
-      const token = await tezos.wallet.at("KT1CdcfvT8uBu8ZorXhP4EVtf8VNdPLZmafg");
+      const token = await tezos.wallet.at("KT1LEdMS9PAVCD4CYseDbUbHXzrkwbxqeoRu");
       
-      const oracle = await tezos.wallet.at("KT1Jr3fu9roMBmzTdeHSTLNDJc9JkBiXbGd1");
+      const oracle = await tezos.wallet.at("KT18mU1VbbQpFyom4UMbLyK5QzmwFbWFj6op");
       const  accountPkh = await tezos.wallet.pkh();
 
       this.setState({wallet:wallet,tezos:tezos,token:token,oracle:oracle,publicKey:accountPkh,MintButton:false});
@@ -96,12 +96,12 @@ export default class extends Component {
         const account = await data.ledger.get(accountPkh);
 
         const response = await this.state.oracle.storage();
-        const Price = response.xtzPrice.toNumber();
+        const Price = (response.xtzPrice.toNumber())/100;
         
         if(account != undefined)
         {
         
-          const ALAToken = account.balance.toNumber();
+          const ALAToken = (account.balance.toNumber())/1000000;
           this.setState({balance:balance,tokenBal:ALAToken,xtzPrice:Price});
         }
         else{
@@ -116,7 +116,7 @@ export default class extends Component {
 
       if (this.state.token != null && this.state.MintAmount > 0)
     {
-          const operation = await this.state.token.methods.mint(this.state.publicKey,this.state.MintAmount).send({amount:this.state.MintAmount});
+          const operation = await this.state.token.methods.mint(this.state.MintAmount).send({amount:this.state.MintAmount});
 
           this.setState({Dialog:true});
           await operation.confirmation();
@@ -132,9 +132,9 @@ export default class extends Component {
     if (amount > 0 && this.state.oracle != null)
     {
       const response = await this.state.oracle.storage();
-      const Price = response.xtzPrice.toNumber();
+      const Price = (response.xtzPrice.toNumber())/100;
       
-      this.setState({MintAmount:amount,estimate:amount*Price*100,xtzPrice:Price});
+      this.setState({MintAmount:amount,estimate:amount*Price,xtzPrice:Price});
     }
     else {
       this.setState({MintAmount:0,estimate:0});
@@ -154,9 +154,9 @@ export default class extends Component {
       
       const tezos = wallet.toTezos();
       
-      const token = await tezos.wallet.at("KT1CdcfvT8uBu8ZorXhP4EVtf8VNdPLZmafg");
+      const token = await tezos.wallet.at("KT1LEdMS9PAVCD4CYseDbUbHXzrkwbxqeoRu");
       
-      const oracle = await tezos.wallet.at("KT1Jr3fu9roMBmzTdeHSTLNDJc9JkBiXbGd1");
+      const oracle = await tezos.wallet.at("KT18mU1VbbQpFyom4UMbLyK5QzmwFbWFj6op");
       const  accountPkh = await tezos.wallet.pkh();
   
       this.setState({wallet:wallet,tezos:tezos,token:token,oracle:oracle,publicKey:accountPkh,MintButton:false,Counter:this.state.Counter+1});
