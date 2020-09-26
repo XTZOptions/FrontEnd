@@ -58,13 +58,16 @@ export default class extends Component {
       await ThanosWallet.isAvailable();
 
       const wallet = new ThanosWallet("Vikalp Platform");
-      await wallet.connect("carthagenet");
+      await wallet.connect({
+        name: "delphinet",
+        rpc: "https://delphinet.smartpy.io",
+      });
       
       const tezos = wallet.toTezos();
       
-      const token = await tezos.wallet.at("KT1LEdMS9PAVCD4CYseDbUbHXzrkwbxqeoRu");
+      const token = await tezos.wallet.at("KT1LE93y3jjtquCM6s3SAUbQtZSk7kfsJPoz");
       
-      const oracle = await tezos.wallet.at("KT18mU1VbbQpFyom4UMbLyK5QzmwFbWFj6op");
+      const oracle = await tezos.wallet.at("KT1HNFs395UNbBVnfQfj1SrEscJidqsScCZT");
       const  accountPkh = await tezos.wallet.pkh();
 
       this.setState({wallet:wallet,tezos:tezos,token:token,oracle:oracle,publicKey:accountPkh,MintButton:false});
@@ -150,13 +153,16 @@ export default class extends Component {
       var AppName = `Vikalp Account ${this.state.Counter}`; 
 
       const wallet = new ThanosWallet(AppName);
-      await wallet.connect("carthagenet");
+      await wallet.connect({
+        name: "delphinet",
+        rpc: "https://delphinet.smartpy.io",
+      });
       
       const tezos = wallet.toTezos();
       
-      const token = await tezos.wallet.at("KT1LEdMS9PAVCD4CYseDbUbHXzrkwbxqeoRu");
+      const token = await tezos.wallet.at("KT1LE93y3jjtquCM6s3SAUbQtZSk7kfsJPoz");
       
-      const oracle = await tezos.wallet.at("KT18mU1VbbQpFyom4UMbLyK5QzmwFbWFj6op");
+      const oracle = await tezos.wallet.at("KT1HNFs395UNbBVnfQfj1SrEscJidqsScCZT");
       const  accountPkh = await tezos.wallet.pkh();
   
       this.setState({wallet:wallet,tezos:tezos,token:token,oracle:oracle,publicKey:accountPkh,MintButton:false,Counter:this.state.Counter+1});
