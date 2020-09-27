@@ -39,7 +39,9 @@ export default class extends Component {
 
     this.state = {wallet:null,tezos:null,token:null,exchange:null,
       balance:0,tokenBal:0,publicKey:"",MintAmount:0,estimate:0,xtzPrice:0,
-      MintButton:true,Counter:1,Dialog:false,xtzSupply:0,StableSupply:0};
+      MintButton:true,Counter:1,Dialog:false,
+      xtzSupply:0,xtzSupplyButton:true,xtzAmount:0,xtzestimate:0,
+      StableSupply:0,StableSupplyButton:true,StableAmount:0};
    
   }
 
@@ -47,7 +49,7 @@ export default class extends Component {
   {
     this.WalletConfigure();
   
-    this.timer = setInterval(()=> this.ValueUpdate(), 2000);
+    this.timer = setInterval(()=> this.ValueUpdate(), 1000);
   }
 
   WalletConfigure = async() => {
@@ -119,9 +121,9 @@ export default class extends Component {
       
   }
 
-  MintToken = async() => {
+  xtzSwap = async() => {
 
-      if (this.state.token != null && this.state.MintAmount > 0)
+    if (this.state.exchange != null && this.state.xtzAmount > 0)
     {
           const operation = await this.state.token.methods.mint(this.state.MintAmount).send({amount:this.state.MintAmount});
 
@@ -132,19 +134,30 @@ export default class extends Component {
     }
     
       }
-  updateAmount = async(amount)=>{
+  
+  xtzupdateAmount = async(amount)=>{
     
     
     amount = parseInt(amount);
-    if (amount > 0 && this.state.oracle != null)
+    if (amount > 0 &&  amount < this.state.xtzSupply)
     {
-      const response = await this.state.oracle.storage();
-      const Price = (response.xtzPrice.toNumber())/100;
       
-      this.setState({MintAmount:amount,estimate:amount*Price,xtzPrice:Price});
+      var difference = this.state.xtzSupply - amount; 
+      const k = 2*(10**9); 
+     
+      var  payment = (Math.floor(k/difference) - 2*(10**6))*1000 + amount*1000;
+
+      console.log(`Payment: ${payment}`);  
+      
+      const token = payment/(10**6);
+
+      console.log(`Token Amount: ${token}`);
+      
+      this.setState({xtzAmount:amount,xtzestimate:token,xtzSupplyButton:false});
+    
     }
     else {
-      this.setState({MintAmount:0,estimate:0});
+      this.setState({xtzAmount:0});
     }
     
   }
@@ -227,7 +240,7 @@ export default class extends Component {
                   </div>
                 </Toolbar>
               </AppBar>
-              <div style={{'marginTop':'6%'}}>
+              <div style={{'marginTop':'8%'}}>
               <ThemeProvider theme={theme}>
                 <Grid container spacing={3}>
                   <Grid item xs={3} sm={2}>
@@ -279,18 +292,15 @@ export default class extends Component {
                               <img src="/money.png"/>
                             </Grid>
                             <Grid item xs={12} sm={12}>
-                              <TextField label="Mint" type="number" variant="outlined" onChange={(event)=>{this.updateAmount(event.target.value)}} />
+                              <TextField label="ALA Token Amount" type="number" variant="outlined" onChange={(event)=>{this.xtzupdateAmount(event.target.value)}} />
                             </Grid>
                             <Grid item xs={12} sm={12}>
                               <Typography variant="body1">
-                                Tokens: {this.state.estimate} ALA
-                                <br/>
-                                <br/>
-                                1 XTZ = {this.state.xtzPrice} ALA Tokens
+                                Required Tokens: {this.state.xtzestimate} ALA Tokens
                               </Typography>
                             </Grid>
                             <Grid item xs={12} sm={12}>
-                              <Button onClick={this.MintToken} variant="contained" color="primary" disabled={this.state.MintButton}>Mint Tokens</Button>
+                              <Button onClick={this.MintToken} variant="contained" color="primary" disabled={this.state.xtzSupplyButton}>Swap XTZ</Button>
                             </Grid>
                           </Grid>  
                       </CardContent>
@@ -316,18 +326,15 @@ export default class extends Component {
                               <img src="/money.png"/>
                             </Grid>
                             <Grid item item xs={12} sm={12}>
-                              <TextField label="Mint" type="number" variant="outlined" onChange={(event)=>{this.updateAmount(event.target.value)}} />
+                              <TextField label="XTZ Amount" type="number" variant="outlined" onChange={(event)=>{this.updateAmount(event.target.value)}} />
                             </Grid>
                             <Grid item xs={12} sm={12}>
                               <Typography variant="body1">
                                 Tokens: {this.state.estimate} ALA
-                                <br/>
-                                <br/>
-                                1 XTZ = {this.state.xtzPrice} ALA Tokens
                               </Typography>
                             </Grid>
                             <Grid item xs={12} sm={12}>
-                              <Button onClick={this.MintToken} variant="contained" color="primary" disabled={this.state.MintButton}>Mint Tokens</Button>
+                              <Button onClick={this.xtzSwap} variant="contained" color="secondary" disabled={this.state.StableSupplyButton}>Swap ALA</Button>
                             </Grid>
                           </Grid>  
                       </CardContent>
