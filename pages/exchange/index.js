@@ -41,7 +41,7 @@ export default class extends Component {
       balance:0,tokenBal:0,publicKey:"",MintAmount:0,estimate:0,xtzPrice:0,
       MintButton:true,Counter:1,Dialog:false,
       xtzSupply:0,xtzSupplyButton:true,xtzAmount:0,xtzestimate:0,
-      StableSupply:0,StableSupplyButton:true,StableAmount:0};
+      StableSupply:0,StableSupplyButton:true,StableAmount:0,StableEstimate:0,StableMutez:0};
    
   }
 
@@ -128,7 +128,9 @@ export default class extends Component {
           const operation = await this.state.token.methods.mint(this.state.MintAmount).send({amount:this.state.MintAmount});
 
           this.setState({Dialog:true});
+
           await operation.confirmation();
+          
           this.setState({Dialog:false});
           console.log("Minted Token");
     }
@@ -137,7 +139,6 @@ export default class extends Component {
   
   xtzupdateAmount = async(amount)=>{
     
-    
     amount = parseInt(amount);
     if (amount > 0 &&  amount < this.state.xtzSupply)
     {
@@ -145,7 +146,7 @@ export default class extends Component {
       var difference = this.state.xtzSupply - amount; 
       const k = 2*(10**9); 
      
-      var  payment = (Math.floor(k/difference) - 2*(10**6))*1000 + amount*1000;
+      var  payment = (Math.floor(k/difference) - this.state.StableSupply*1000)*1000 + amount*1000;
 
       console.log(`Payment: ${payment}`);  
       
@@ -153,11 +154,42 @@ export default class extends Component {
 
       console.log(`Token Amount: ${token}`);
       
-      this.setState({xtzAmount:amount,xtzestimate:token,xtzSupplyButton:false});
+      this.setState({xtzAmount:amount,xtzestimate:token});
+
+      if(token < this.state.tokenBal)
+      {
+        this.setState({xtzSupplyButton:false});
+      }
+    }
+    else {
+      this.setState({xtzAmount:0,xtzestimate:0,xtzSupplyButton:true});
+    }
+    
+  }
+
+  StableupdateAmount = async(amount)=>{
+    
+    amount = parseInt(amount);
+    if (amount > 0 &&  amount < this.state.stableSupply)
+    {
+      console.log("StableInput");
+
+      var difference = this.state.stableSupply - amount; 
+      const k = 2*(10**9); 
+     
+      var  payment = (Math.floor(k/difference) - this.state.xtzSupply*1000)*1000 + amount*1000;
+
+      console.log(`Payment: ${payment}`);  
+      
+      const token = payment/(10**6);
+
+      console.log(`Token Amount: ${token}`);
+      
+      this.setState({StableAmount:amount,StableEstimate:token,StableSupplyButton:false,StableMutez:payment});
     
     }
     else {
-      this.setState({xtzAmount:0});
+      this.setState({StableAmount:0,StableEstimate:0,StableSupplyButton:true,StableMutez:0});
     }
     
   }
@@ -292,7 +324,7 @@ export default class extends Component {
                               <img src="/money.png"/>
                             </Grid>
                             <Grid item xs={12} sm={12}>
-                              <TextField label="ALA Token Amount" type="number" variant="outlined" onChange={(event)=>{this.xtzupdateAmount(event.target.value)}} />
+                              <TextField label="XTZ Amount" type="number" variant="outlined" onChange={(event)=>{this.xtzupdateAmount(event.target.value)}} />
                             </Grid>
                             <Grid item xs={12} sm={12}>
                               <Typography variant="body1">
@@ -326,11 +358,11 @@ export default class extends Component {
                               <img src="/money.png"/>
                             </Grid>
                             <Grid item item xs={12} sm={12}>
-                              <TextField label="XTZ Amount" type="number" variant="outlined" onChange={(event)=>{this.updateAmount(event.target.value)}} />
+                              <TextField label="ALA Token Amount" type="number" variant="outlined" onChange={(event)=>{this.StableupdateAmount(event.target.value)}} />
                             </Grid>
                             <Grid item xs={12} sm={12}>
                               <Typography variant="body1">
-                                Tokens: {this.state.estimate} ALA
+                                Amount: {this.state.StableEstimate} XTZ
                               </Typography>
                             </Grid>
                             <Grid item xs={12} sm={12}>
