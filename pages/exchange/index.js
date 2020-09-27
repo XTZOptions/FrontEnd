@@ -170,11 +170,12 @@ export default class extends Component {
   StableupdateAmount = async(amount)=>{
     
     amount = parseInt(amount);
-    if (amount > 0 &&  amount < this.state.stableSupply)
+    
+    if (amount > 0 &&  amount < this.state.StableSupply)
     {
       console.log("StableInput");
 
-      var difference = this.state.stableSupply - amount; 
+      var difference = this.state.StableSupply - amount; 
       const k = 2*(10**9); 
      
       var  payment = (Math.floor(k/difference) - this.state.xtzSupply*1000)*1000 + amount*1000;
@@ -185,8 +186,12 @@ export default class extends Component {
 
       console.log(`Token Amount: ${token}`);
       
-      this.setState({StableAmount:amount,StableEstimate:token,StableSupplyButton:false,StableMutez:payment});
-    
+      this.setState({StableAmount:amount,StableEstimate:token,StableMutez:payment});
+      
+      if(token < this.state.balance)
+      {
+        this.setState({StableSupplyButton:false});
+      }
     }
     else {
       this.setState({StableAmount:0,StableEstimate:0,StableSupplyButton:true,StableMutez:0});
