@@ -62,11 +62,14 @@ export default class extends Component {
 
       await ThanosWallet.isAvailable();
       const wallet = new ThanosWallet("Vikalp Platform");
-      await wallet.connect("carthagenet");
+      await wallet.connect({
+        name: "delphinet",
+        rpc: "https://delphinet.smartpy.io",
+      });
       const tezos = wallet.toTezos();
 
-      const token = await tezos.wallet.at("KT1CdcfvT8uBu8ZorXhP4EVtf8VNdPLZmafg");
-      const options = await tezos.wallet.at("KT1XndceJUg2BDGywXz3x8GqTMjLjWQ7AB7g");
+      const token = await tezos.wallet.at("KT1LE93y3jjtquCM6s3SAUbQtZSk7kfsJPoz");
+      const options = await tezos.wallet.at("KT1P62S4t8Z1XWHEXnFHcGjf2JHBSgQuHvGx");
       
       const  accountPkh = await tezos.wallet.pkh();
 
@@ -97,7 +100,7 @@ export default class extends Component {
         const data = await this.state.token.storage();
         const val = await this.state.options.storage();
         
-        const capital = val.validation.totalSupply.toNumber();
+        const capital = (val.validation.totalSupply.toNumber())/1000000;
         
         const account = await data.ledger.get(accountPkh);
         
@@ -115,14 +118,14 @@ export default class extends Component {
             {
               if (premium.premium.toNumber() > 0 )
               {
-                this.setState({premium:premium.premium.toNumber(),PremiumButton:false});
+                this.setState({premium:(premium.premium.toNumber())/1000000,PremiumButton:false});
               }
               else
               {
                 this.setState({premium:0,PremiumButton:true});
               }
 
-              this.setState({LockAmount:premium.amount.toNumber()});
+              this.setState({LockAmount:(premium.amount.toNumber())/1000000});
             }
             else {
               this.setState({LockAmount:0,premium:0,PremiumButton:true})
@@ -143,11 +146,10 @@ export default class extends Component {
 
   AddToken = async() => {
 
-      if (this.state.token != null && this.state.Amount > 0 && this.state.Amount % 10000 == 0 )
+      if (this.state.token != null && this.state.Amount > 0 )
     {
-
           
-          const operation = await this.state.options.methods.putSeller(this.state.Amount).send();
+          const operation = await this.state.options.methods.putSeller(this.state.Amount*1000000).send();
           this.setState({Dialog:true,DialogHeading:"Add Supply to Contract"});
           
           await operation.confirmation();
@@ -185,12 +187,15 @@ export default class extends Component {
       var AppName = `Vikalp Account ${this.state.Counter}`; 
 
     const wallet = new ThanosWallet(AppName);
-    await wallet.connect("carthagenet");
+    await wallet.connect({
+      name: "delphinet",
+      rpc: "https://delphinet.smartpy.io",
+    });
     
     const tezos = wallet.toTezos();
     
-    const token = await tezos.wallet.at("KT1CdcfvT8uBu8ZorXhP4EVtf8VNdPLZmafg");
-    const options = await tezos.wallet.at("KT1XndceJUg2BDGywXz3x8GqTMjLjWQ7AB7g");
+    const token = await tezos.wallet.at("KT1LE93y3jjtquCM6s3SAUbQtZSk7kfsJPoz");
+    const options = await tezos.wallet.at("KT1P62S4t8Z1XWHEXnFHcGjf2JHBSgQuHvGx");
     
     const  accountPkh = await tezos.wallet.pkh();
 
@@ -334,7 +339,7 @@ export default class extends Component {
                             </Grid>
                             
                             <Grid item xs={4}>
-                              <Button onClick={this.AddToken} variant="contained" color="primary" disabled={true}>Increase Supply</Button>
+                              <Button onClick={this.AddToken} variant="contained" color="primary" disabled={this.state.SupplyButton}>Increase Supply</Button>
                             </Grid>
                           </Grid>  
                       </CardContent>
@@ -412,8 +417,6 @@ export default class extends Component {
                 </DialogContentText>
               </DialogContent>
             </Dialog>
-              
-                      
             </div>  
     )
   }
