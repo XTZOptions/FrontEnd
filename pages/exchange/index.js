@@ -123,11 +123,13 @@ export default class extends Component {
 
   StableSwap = async() => {
 
-    if(this.state.exchange != null && this.state.xtzAmount>0)
+    if(this.state.exchange != null && this.state.StableAmount >0 )
     {
           console.log("Swapping Exchange");
+          console.log(this.state.StableAmount);
+          console.log(this.state.StableMutez);
 
-          const operation = await this.state.exchange.methods.GetStable(this.state.StableAmount).send();
+          const operation = await this.state.exchange.methods.GetStable(this.state.StableAmount).send({amount:this.state.StableMutez,mutez:true});
 
           this.setState({Dialog:true,DialogMessage:"Swap XTZ to ALA"});
 
