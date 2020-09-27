@@ -39,7 +39,7 @@ export default class extends Component {
 
     this.state = {wallet:null,tezos:null,token:null,exchange:null,
       balance:0,tokenBal:0,publicKey:"",MintAmount:0,estimate:0,xtzPrice:0,
-      MintButton:true,Counter:1,Dialog:false,
+      MintButton:true,Counter:1,Dialog:false,DialogMessage:"",
       xtzSupply:0,xtzSupplyButton:true,xtzAmount:0,xtzestimate:0,
       StableSupply:0,StableSupplyButton:true,StableAmount:0,StableEstimate:0,StableMutez:0};
    
@@ -121,18 +121,38 @@ export default class extends Component {
       
   }
 
-  xtzSwap = async() => {
+  StableSwap = async() => {
 
-    if (this.state.exchange != null && this.state.xtzAmount > 0)
+    if(this.state.exchange != null && this.state.xtzAmount>0)
     {
-          const operation = await this.state.token.methods.mint(this.state.MintAmount).send({amount:this.state.MintAmount});
+          console.log("Swapping Exchange");
 
-          this.setState({Dialog:true});
+          const operation = await this.state.exchange.methods.GetStable(this.state.StableAmount).send();
+
+          this.setState({Dialog:true,DialogMessage:"Swap XTZ to ALA"});
 
           await operation.confirmation();
           
           this.setState({Dialog:false});
-          console.log("Minted Token");
+          console.log("Swap Completed");
+    }
+
+  }
+
+  xtzSwap = async() => {
+
+    if (this.state.exchange != null && this.state.tokenBal > this.state.xtzestimate)
+    {
+          console.log("Swapping Exchange");
+
+          const operation = await this.state.exchange.methods.GetXtz(this.state.xtzAmount).send();
+
+          this.setState({Dialog:true,DialogMessage:"Swap ALA to XTZ"});
+
+          await operation.confirmation();
+          
+          this.setState({Dialog:false});
+          console.log("Swap Completed");
     }
     
       }
@@ -155,10 +175,13 @@ export default class extends Component {
       console.log(`Token Amount: ${token}`);
       
       this.setState({xtzAmount:amount,xtzestimate:token});
-
+      
       if(token < this.state.tokenBal)
       {
         this.setState({xtzSupplyButton:false});
+      }
+      else {
+        this.setState({xtzSupplyButton:true});
       }
     }
     else {
@@ -191,6 +214,9 @@ export default class extends Component {
       if(token < this.state.balance)
       {
         this.setState({StableSupplyButton:false});
+      }
+      else {
+        this.setState({StableSupplyButton:true});
       }
     }
     else {
@@ -337,7 +363,7 @@ export default class extends Component {
                               </Typography>
                             </Grid>
                             <Grid item xs={12} sm={12}>
-                              <Button onClick={this.MintToken} variant="contained" color="primary" disabled={this.state.xtzSupplyButton}>Swap XTZ</Button>
+                              <Button onClick={this.xtzSwap} variant="contained" color="primary" disabled={this.state.xtzSupplyButton}>Swap XTZ</Button>
                             </Grid>
                           </Grid>  
                       </CardContent>
@@ -367,11 +393,11 @@ export default class extends Component {
                             </Grid>
                             <Grid item xs={12} sm={12}>
                               <Typography variant="body1">
-                                Amount: {this.state.StableEstimate} XTZ
+                                Required Amount: {this.state.StableEstimate} XTZ
                               </Typography>
                             </Grid>
                             <Grid item xs={12} sm={12}>
-                              <Button onClick={this.xtzSwap} variant="contained" color="secondary" disabled={this.state.StableSupplyButton}>Swap ALA</Button>
+                              <Button onClick={this.StableSwap} variant="contained" color="secondary" disabled={this.state.StableSupplyButton}>Swap ALA</Button>
                             </Grid>
                           </Grid>  
                       </CardContent>
@@ -389,7 +415,7 @@ export default class extends Component {
                 disableBackdropClick={true}
                 disableEscapeKeyDown={true}
               >
-              <DialogTitle id="alert-dialog-title">{"Minting ALA Tokens"}</DialogTitle>
+              <DialogTitle id="alert-dialog-title">{this.state.DialogMessage}</DialogTitle>
               <DialogContent>
                 <DialogContentText id="alert-dialog-description">
                   <div style={{'marginLeft':'35%'}}>
