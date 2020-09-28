@@ -166,8 +166,12 @@ export default class extends Component {
 
     if (this.state.token != null)
     {
-        // const operation = await this.state.options.methods.WithdrawPremium().send();
-        // await operation.confirmation();
+        
+        const operation = await this.state.options.methods.WithdrawPremium(1).send();
+        this.setState({Dialog:true,DialogHeading:"Withdrawing Premium"});
+          
+        await operation.confirmation();
+        this.setState({Dialog:false});
     }
 
   }

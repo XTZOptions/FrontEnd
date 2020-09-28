@@ -72,7 +72,10 @@ export default class extends Component {
 
       await ThanosWallet.isAvailable();
       const wallet = new ThanosWallet("Vikalp Platform");
-      await wallet.connect("carthagenet");
+      await wallet.connect({
+        name: "delphinet",
+        rpc: "https://delphinet.smartpy.io",
+      });
       const tezos = wallet.toTezos();
       const token = await tezos.wallet.at("KT1CdcfvT8uBu8ZorXhP4EVtf8VNdPLZmafg");
       const options = await tezos.wallet.at("KT1XndceJUg2BDGywXz3x8GqTMjLjWQ7AB7g");
@@ -162,7 +165,10 @@ export default class extends Component {
       var AppName = `Vikalp Account ${this.state.Counter}`; 
 
       const wallet = new ThanosWallet(AppName);
-      await wallet.connect("carthagenet");
+      await wallet.connect({
+        name: "delphinet",
+        rpc: "https://delphinet.smartpy.io",
+      });
       
       const tezos = wallet.toTezos();
       
