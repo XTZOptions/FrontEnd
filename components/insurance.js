@@ -116,13 +116,33 @@ class InsuranceBody extends React.Component {
       {
         var amount = this.state.StrikePrice - this.state.Premium;
         console.log(amount);
-        this.setState({BreakEven:amount.toFixed(2),BuyButton:false});
+        this.setState({BreakEven:amount.toFixed(2)});
+        if(this.props.totalCapital > this.state.StrikePrice*this.state.quantity)
+        {
+          this.setState({BuyButton:false});
+        }
+        else {
+          this.setState({BuyButton:true});
+        }
       }
     }
 
     BuySecurity = async() => {
+      
+      
+        console.log(`Quantity: ${this.state.quantity}`);
+        console.log(`Ratio: ${this.state.Ratio}`);
+        console.log(`Duration: ${this.state.duration}`);
 
+        
+        const operation = await this.props.options.methods.putBuyer(this.state.quantity,this.state.Ratio,this.state.duration).send();
+        this.setState({Dialog:true,DialogHeading:"Purchasing Options Contract"});
 
+        await operation.confirmation();
+        this.setState({Dialog:false});
+        console.log("Security Purchased");
+        
+        
     }
 
     handleClose = ()=> {

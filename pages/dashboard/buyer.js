@@ -45,7 +45,7 @@ export default class extends Component {
   {
     this.WalletConfigure();
   
-    this.timer = setInterval(()=> this.ValueUpdate(), 1000);
+    this.timer = setInterval(()=> this.ValueUpdate(), 5000);
   }
 
   WalletConfigure = async() => {
@@ -259,7 +259,7 @@ export default class extends Component {
                     oracle={this.state.oracle}
 
                     tokenBalance={this.state.tokenBal}
-                  
+                    totalCapital={this.state.totalCapital}
                   
                   />      
                 </Grid>
