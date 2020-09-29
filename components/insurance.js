@@ -29,7 +29,7 @@ class InsuranceBody extends React.Component {
         super();
 
         this.state = {duration:14,quantity:0,StrikeMap:{},StrikePrice:0,
-        Premium:0,BreakEven:0,Ratio:100,BuyButton:true};
+        Premium:0,BreakEven:0,Ratio:100,BuyButton:true,Dialog:false};
     }
 
     updateQuantity = (amount)=>{
@@ -109,6 +109,11 @@ class InsuranceBody extends React.Component {
         console.log(amount);
         this.setState({BreakEven:amount,BuyButton:false});
       }
+    }
+
+    BuySecurity = async() => {
+
+
     }
 
 
@@ -242,12 +247,29 @@ class InsuranceBody extends React.Component {
                             </Grid>
                             
                             <Grid item xs={4}>
-                              <Button onClick={this.EarnAmount} variant="contained" color="primary" disabled={this.state.BuyButton}>Buy Security</Button>
+                              <Button onClick={this.BuySecurity} variant="contained" color="primary" disabled={this.state.BuyButton}>Buy Security</Button>
                             </Grid>
                           </Grid>  
                       </CardContent>
                     </Card>
                   </Grid>
+                  <Dialog
+                    open={this.state.Dialog}
+                    onClose={this.handleClose}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description"
+                    disableBackdropClick={true}
+                    disableEscapeKeyDown={true}
+                  >
+                    <DialogTitle id="alert-dialog-title">{"Purchasing Security"}</DialogTitle>
+                    <DialogContent>
+                      <DialogContentText id="alert-dialog-description">
+                        <div style={{'marginLeft':'35%'}}>
+                          <CircularProgress/>
+                        </div>
+                      </DialogContentText>
+                    </DialogContent>
+                  </Dialog>
 
                    </Grid>
         )

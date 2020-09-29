@@ -103,6 +103,16 @@ export default class extends Component {
         
         const account = await data.ledger.get(accountPkh);
         
+        if(account != undefined)
+        {
+        
+          const ALAToken = (account.balance.toNumber())/1000000;
+          this.setState({balance:balance,tokenBal:ALAToken});
+        }
+        else{
+          this.setState({balance:balance,tokenBal:0});
+        }
+
         const ALAToken = account.balance.toNumber();
       
         const optionsContract = await this.state.options.storage();
@@ -214,7 +224,19 @@ export default class extends Component {
     
     console.log(amount);
     amount = parseInt(amount)
-    this.setState({Amount:amount})
+    if(amount > 0 )
+    {
+      this.setState({Amount:amount})
+
+      if(amount > this.state.tokenBal)
+      {
+        this.setState({SupplyButton:true});
+      }
+      else{
+        this.setState({SupplyButton:false});
+      }
+    }
+    
   }
 
   handleClose = ()=>  {
