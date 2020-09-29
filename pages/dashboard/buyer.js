@@ -40,30 +40,12 @@ export default class extends Component {
     };
    
   } 
-  valuetext = (value)=>{
-
-    return `${value} Week`;
-  }
-
-  DurationChange = (event,value) => {
   
-    this.setState({Duration:value});
-    console.log(value);
-  
-  }
-
-  StrikePriceChange = (event,value) => {
-    
-    this.setState({StrikePrice:value});
-    console.log(value);
-  
-  }
-
   componentDidMount()
   {
     this.WalletConfigure();
   
-    this.timer = setInterval(()=> this.ValueUpdate(), 5000);
+    this.timer = setInterval(()=> this.ValueUpdate(), 1000);
   }
 
   WalletConfigure = async() => {

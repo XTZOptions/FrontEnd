@@ -8,6 +8,13 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Slider from '@material-ui/core/Slider';
 
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import CircularProgress from '@material-ui/core/CircularProgress';
+
 import Link from 'next/link';
 import Head from 'next/head';
 
@@ -29,7 +36,7 @@ class InsuranceBody extends React.Component {
         super();
 
         this.state = {duration:14,quantity:0,StrikeMap:{},StrikePrice:0,
-        Premium:0,BreakEven:0,Ratio:100,BuyButton:true,Dialog:false};
+        Premium:0,BreakEven:0,Ratio:100,BuyButton:true,Dialog:false,DialogHeading:""};
     }
 
     updateQuantity = (amount)=>{
@@ -71,20 +78,20 @@ class InsuranceBody extends React.Component {
       {
         const Interest = {
           80:{
-                7:1,14:2,21:4
+                7:0.01,14:0.02,21:0.04
         },
         90:{
           7:2,14:4,21:8
         },
         
         100:{
-          7:4,14:8,21:16
+          7:0.04,14:0.08,21:0.16
         },
         110:{
-          7:2,14:4,21:8
+          7:0.02,14:0.04,21:0.08
         },
         120:{
-          7:1,14:2,21:4
+          7:0.01,14:0.02,21:0.04
         }};
 
         var amount = Interest[this.state.Ratio][this.state.duration];
@@ -92,8 +99,8 @@ class InsuranceBody extends React.Component {
         console.log(`StrikePrice ${this.state.StrikePrice}`);
         console.log(`Premium ${amount}`);
         
-        var premium = ((this.state.StrikePrice*this.state.quantity*amount)/100).toFixed(2);
-        if (this.state.Ratio > 100) premium += this.state.StrikePrice - this.state.StrikeMap[100]; 
+        var premium = (this.state.StrikePrice*this.state.quantity*amount);
+        if (this.state.Ratio > 100) premium += this.state.StrikePrice - (this.state.StrikeMap[100])/100; 
         this.setState({Premium:premium});
         this.BreakEvenPrice();
       }
@@ -261,7 +268,7 @@ class InsuranceBody extends React.Component {
                     disableBackdropClick={true}
                     disableEscapeKeyDown={true}
                   >
-                    <DialogTitle id="alert-dialog-title">{"Purchasing Security"}</DialogTitle>
+                    <DialogTitle id="alert-dialog-title">{this.state.DialogHeading}</DialogTitle>
                     <DialogContent>
                       <DialogContentText id="alert-dialog-description">
                         <div style={{'marginLeft':'35%'}}>
