@@ -97,11 +97,13 @@ class InsuranceBody extends React.Component {
         var amount = Interest[this.state.Ratio][this.state.duration];
 
         console.log(`StrikePrice ${this.state.StrikePrice}`);
-        console.log(`Premium ${amount}`);
         
         var premium = (this.state.StrikePrice*this.state.quantity*amount);
-        if (this.state.Ratio > 100) premium += this.state.StrikePrice - (this.state.StrikeMap[100])/100; 
-        this.setState({Premium:premium});
+        console.log(`Premium ${amount}`);
+  
+        if (this.state.Ratio > 100) {premium += this.state.StrikePrice - (this.state.StrikeMap[100])/100; }
+        
+        this.setState({Premium:premium.toFixed(2)});
         this.BreakEvenPrice();
       }
       else{
@@ -114,7 +116,7 @@ class InsuranceBody extends React.Component {
       {
         var amount = this.state.StrikePrice - this.state.Premium;
         console.log(amount);
-        this.setState({BreakEven:amount,BuyButton:false});
+        this.setState({BreakEven:amount.toFixed(2),BuyButton:false});
       }
     }
 
@@ -123,6 +125,9 @@ class InsuranceBody extends React.Component {
 
     }
 
+    handleClose = ()=> {
+      this.setState({Dialog:false});
+    }
 
 
     componentDidUpdate()
