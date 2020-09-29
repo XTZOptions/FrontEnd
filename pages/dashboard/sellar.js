@@ -1,5 +1,4 @@
 import React,{Component} from 'react'; 
-import axios from 'axios';
 import { ThanosWallet } from "@thanos-wallet/dapp";
 import {Button,Typography,Grid,AppBar, Toolbar,TextField} from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/core/styles';
@@ -179,8 +178,11 @@ export default class extends Component {
   EarnAmount = async() => {
     if(this.state.token != null)
     {
-        // const operation = await this.state.options.methods.WithdrawPremium().send();
-        // await operation.confirmation();
+        const operation = await this.state.options.methods.WithdrawToken(1).send();
+        this.setState({Dialog:true,DialogHeading:"Withdrawing TotalAmount"});
+          
+        await operation.confirmation();
+        this.setState({Dialog:false});
     }
   }
 

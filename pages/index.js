@@ -42,8 +42,8 @@ export default function Home() {
         <div className="container">
           <div className="menu-wrapper clearfix">
             <div className="logo">
-              <a href="index.html">
-                <img src="images/logo/logo.png" alt="Logo" />
+              <a href="/">
+                <img src="/logo-vikalp.png" alt="Logo" />
               </a>
             </div>
           

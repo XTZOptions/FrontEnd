@@ -1,19 +1,15 @@
 import React,{Component} from 'react'; 
-import axios from 'axios';
 import { ThanosWallet } from "@thanos-wallet/dapp";
 import {Button,Typography,Grid,AppBar, Toolbar,TextField} from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/core/styles';
 import theme from '../../components/navbar';
 import {makeStyles} from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
-import Paper from '@material-ui/core/Paper';
 import CardContent from '@material-ui/core/CardContent';
 import Slider from '@material-ui/core/Slider';
 
 import Link from 'next/link';
 import Head from 'next/head';
-
-import InsuranceBody from '../../components/insurance';
 
 const useStyles = makeStyles({
     helloThereStyle:{
@@ -35,7 +31,8 @@ export default class extends Component {
 
     this.state = {wallet:null,tezos:null,token:null,options:null,balance:0,tokenBal:0,oracle:null,
       publicKey:"",Amount:0,estimate:0,
-      poolSize:0,totalCapital:0,LockButton:true,CycleTime:null,
+      poolSize:0,totalCapital:0,premium:0,
+      PremiumButton:true,LockAmount:0,LockButton:true,CycleTime:null,
       xtzPrice:4,StrikePrice:0,Duration:14,Counter:1
     };
    
@@ -112,11 +109,11 @@ export default class extends Component {
         const data = await this.state.token.storage();
         const val = await this.state.options.storage();
         
-        const capital = (val.validation.totalSupply.toNumber())/10**6;
+        const capital = val.validation.totalSupply.toNumber();
         
         const account = await data.ledger.get(accountPkh);
         
-        const ALAToken = (account.balance.toNumber())/10**6;
+        const ALAToken = account.balance.toNumber();
       
         const optionsContract = await this.state.options.storage();
         
@@ -159,6 +156,17 @@ export default class extends Component {
       
     }
 
+  }
+
+  updateAmount = (amount)=>{
+    
+    amount = parseInt(amount);
+    if (amount > 0)
+    {
+      console.log(amount);
+      this.setState({Amount:amount});
+    }
+    this.setState({Amount:0});
   }
 
   render(){
@@ -221,15 +229,14 @@ export default class extends Component {
                           </Grid>
                           <Grid item xs={8}>
                            <Typography variant="h6" >
-                              Total Liquidity :<br/>
-                              {this.state.totalCapital} Tokens
+                              {this.state.totalCapital} Total Liquidity 
                             </Typography>
                           </Grid>
                         </Grid>
                       </CardContent>
                     </Card>
                   </Grid>
-                  <Grid item xs={4}>
+                  <Grid item xs={3}>
                     <Card variant="elevation">
                       <CardContent>
                       <Grid container spacing={1}>
@@ -238,48 +245,128 @@ export default class extends Component {
                           </Grid>
                           <Grid item xs={8}>
                            <Typography variant="h6" >
-                              Cycle End : <br/>
-                              {this.state.CycleTime}
+                              Cycle End :{this.state.CycleTime}
                             </Typography>
                           </Grid>
                         </Grid>
+                      </CardContent>
+                    </Card>
+                  </Grid>
+                  <Grid item xs={4}>
+                  <Card variant="elevation">
+                      <CardContent>
+                      <Grid container spacing={1}>
+                          <Grid item xs={3}>
+                          <img src="/money.png"/>
+                          </Grid>
+                          <Grid item xs={9}>
+                           <Typography variant="h6" >
+                            Personal Balance :{this.state.tokenBal} 
+                            </Typography>
+                          </Grid>
+                        </Grid>
+                      </CardContent>
+                    </Card>
+                  </Grid>
+                  <Grid item xs = {2}>
+                  </Grid>
+                  <Grid item xs={8}>
+                    <Card variant="elevation">
+                      <CardContent>
+                          <Grid container spacing={3}>
+                            <Grid item xs={2}>
+                              <img src="/money.png"/>
+                            </Grid>
+                            <Grid item xs={4}>
+                              <TextField label="Options Quantity" type="number" variant="outlined" onChange={(event)=>{this.updateAmount(event.target.value)}} />
+                            </Grid>
+                            
+                            <Grid item xs={5}>
+                              <div style={{'marginTop':'2%'}}>
+                              <Typography>
+                                Contract Duration : {this.state.Duration} Days
+                              </Typography>
+                             
+                              <Slider
+                                  defaultValue={14}
+                                  getAriaValueText={this.valuetext}
+                                  aria-labelledby="discrete-slider"
+                                  valueLabelDisplay="auto"
+                                  step={7}
+                                  marks
+                                  min={7}
+                                  max={21}
+                                  onChange={this.DurationChange}
+                              />
+                              </div>
+                            </Grid>
+                          </Grid>  
+                      </CardContent>
+                    </Card>
+                  </Grid>
+
+                  <Grid item xs={2}>
+                  </Grid>
+                  <Grid item xs = {3}>
+                  </Grid>
+
+                  <Grid item xs={6}>
+                    <Card variant="elevation">
+                      <CardContent>
+                          <Grid container spacing={3}>
+                            <Grid item xs={2}>
+                              <img src="/bank.png"/>
+                            </Grid>
+                            <Grid item xs={4}>
+                              <Typography variant="h5">
+                               Strike Price
+                              </Typography>
+                            </Grid>
+                            <Grid item xs={5}>
+                            <div style={{'marginTop':'2%'}}>
+                              <Typography>
+                                XTZ Price (in USD) : {this.state.StrikePrice} USD
+                              </Typography>    
+                              <Slider
+                                  defaultValue={2}
+                                  getAriaValueText={this.valuetext}
+                                  aria-labelledby="discrete-slider"
+                                  valueLabelDisplay="auto"
+                                  step={10}
+                                  marks
+                                  min={80}
+                                  max={120}
+                                  onChange={this.StrikePriceChange}
+                              />
+                              </div>
+                            </Grid>
+                          </Grid>  
                       </CardContent>
                     </Card>
                   </Grid>
                   <Grid item xs={3}>
-                  <Card variant="elevation">
+                  </Grid>
+                  <Grid item xs = {3}>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Card variant="elevation">
                       <CardContent>
-                      <Grid container spacing={1}>
-                          <Grid item xs={4}>
-                          <img src="/money.png"/>
-                          </Grid>
-                          <Grid item xs={8}>
-                           <Typography variant="h6" >
-                            Personal Balance : <br/>
-                            {this.state.tokenBal} Tokens
-                            </Typography>
-                          </Grid>
-                        </Grid>
+                          <Grid container spacing={3}>
+                            <Grid item xs={2}>
+                              <img src="/locked.png"/>
+                            </Grid>
+                            <Grid item xs={6}>
+                              <Typography variant="h5">
+                                Break Even Price: {this.state.LockAmount}
+                              </Typography>
+                            </Grid>
+                            <Grid item xs={4}>
+                              <Button onClick={this.EarnAmount} variant="contained" color="primary" disabled={this.state.LockButton}>Buy Security</Button>
+                            </Grid>
+                          </Grid>  
                       </CardContent>
                     </Card>
                   </Grid>
-                  <Grid item xs = {1}>
-                  </Grid>
-                  <div style={{"marginBottom":"10%"}}>
-
-                  </div>
-                  <InsuranceBody 
-
-                    wallet={this.state.wallet}
-                    tezos={this.state.tezos}
-                    token={this.state.token}
-                    options={this.state.options}
-                    oracle={this.state.oracle}
-
-                    tokenBalance={this.state.tokenBal}
-                  
-                  
-                  />      
                 </Grid>
               </ThemeProvider>
               </div>             
