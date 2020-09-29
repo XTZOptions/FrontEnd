@@ -36,7 +36,7 @@ export default class extends Component {
     this.state = {wallet:null,tezos:null,token:null,options:null,balance:0,tokenBal:0,oracle:null,
       publicKey:"",Amount:0,estimate:0,
       poolSize:0,totalCapital:0,LockButton:true,CycleTime:null,
-      xtzPrice:4,StrikePrice:0,Duration:14,Counter:1
+      xtzPrice:4,StrikePrice:0,Duration:14,Counter:1,insuranceState:false
     };
    
   } 
@@ -45,7 +45,7 @@ export default class extends Component {
   {
     this.WalletConfigure();
   
-    this.timer = setInterval(()=> this.ValueUpdate(), 5000);
+    this.timer = setInterval(()=> this.ValueUpdate(), 3000);
   }
 
   WalletConfigure = async() => {
@@ -104,7 +104,24 @@ export default class extends Component {
         
         this.setState({CycleTime:optionsContract.validation.cycleEnd});
         
-        // const premium = await optionsContract.contractSellar.get(this.state.publicKey);
+        try {
+          
+          const account = await optionsContract.contractBuyer.get(this.state.publicKey);
+          
+          if (account != undefined )
+          {
+            this.setState({insuranceState:true});
+            console.log("Insurance Purchased");
+          }
+          else {
+            this.setState({insuranceState:false});
+            console.log("Not Found");
+          }
+
+      } catch (error) {
+        
+        console.log("Value not present");
+      }
         
         
        
@@ -260,7 +277,7 @@ export default class extends Component {
 
                     tokenBalance={this.state.tokenBal}
                     totalCapital={this.state.totalCapital}
-                  
+                    insuranceState={this.state.insuranceState}
                   />      
                 </Grid>
               </ThemeProvider>
