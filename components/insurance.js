@@ -147,11 +147,11 @@ class InsuranceBody extends React.Component {
 
     SellSecurity = async() => {
       
-      // const operation = await this.props.options.methods.ReleaseContract(1).send();
+      const operation = await this.props.options.methods.ReleaseContract(1).send();
       this.setState({Dialog:true,DialogHeading:"Exercising Security"});
 
-      // await operation.confirmation();
-      // this.setState({Dialog:false});
+      await operation.confirmation();
+      this.setState({Dialog:false});
       console.log("Security Sold");
       
       
@@ -187,7 +187,34 @@ class InsuranceBody extends React.Component {
 
     render()
     {   
-      if(this.props.insuranceState == false)
+      if(this.props.insuranceState == 0) 
+      {
+        return (
+          <Grid container spacing={3}>
+              <Grid item xs={5}>
+              </Grid>
+              <Grid item xs={5}>
+               
+                  <Grid container spacing={2}>
+                    <Grid item xs={3}>
+                      <Typography variant="h4">
+                        Loading
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <CircularProgress/>
+                    </Grid>
+
+
+                  </Grid>
+
+                 
+               
+              </Grid>
+          </Grid>
+        )
+      }
+      else if(this.props.insuranceState == 1)
       {
         return (
                     

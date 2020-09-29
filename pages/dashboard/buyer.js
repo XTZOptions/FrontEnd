@@ -36,7 +36,7 @@ export default class extends Component {
     this.state = {wallet:null,tezos:null,token:null,options:null,balance:0,tokenBal:0,oracle:null,
       publicKey:"",Amount:0,estimate:0,
       poolSize:0,totalCapital:0,LockButton:true,CycleTime:null,
-      xtzPrice:4,Duration:14,Counter:1,insuranceState:false,
+      xtzPrice:4,Duration:14,Counter:1,insuranceState:0,
       StrikePrice:0,Quantity:0,Expiry:"",
       InsuranceQuantity:0,InsuranceStrike:0,InsuranceExpiry:0
     };
@@ -112,7 +112,7 @@ export default class extends Component {
           {
             this.setState({
               
-              insuranceState:true,CycleTime:optionsContract.validation.cycleEnd,poolSize:val.poolSet.length,
+              insuranceState:2,CycleTime:optionsContract.validation.cycleEnd,poolSize:val.poolSet.length,
               totalCapital:capital,tokenBal:ALAToken,
               InsuranceQuantity:account.options.toNumber(),
               InsuranceStrike:account.strikePrice.toNumber(),
@@ -121,7 +121,8 @@ export default class extends Component {
             
           }
           else {
-            this.setState({insuranceState:false,CycleTime:optionsContract.validation.cycleEnd,poolSize:val.poolSet.length,totalCapital:capital,tokenBal:ALAToken});
+            this.setState({insuranceState:1,CycleTime:optionsContract.validation.cycleEnd,poolSize:val.poolSet.length,totalCapital:capital,tokenBal:ALAToken});
+            console.log(this.state.publicKey);
             console.log("Not Found");
           }
 
@@ -157,7 +158,7 @@ export default class extends Component {
       
       const  accountPkh = await tezos.wallet.pkh();
   
-      this.setState({wallet:wallet,tezos:tezos,token:token,options:options,oracle:oracle,publicKey:accountPkh,Counter:this.state.Counter+1});
+      this.setState({wallet:wallet,tezos:tezos,token:token,options:options,oracle:oracle,publicKey:accountPkh,Counter:this.state.Counter+1,insuranceState:0});
       
     }
 
@@ -280,7 +281,7 @@ export default class extends Component {
 
                     tokenBalance={this.state.tokenBal}
                     totalCapital={this.state.totalCapital}
-                    
+
                     insuranceState={this.state.insuranceState}
                     InsuranceQuantity={this.state.InsuranceQuantity}
                     InsuranceStrike={this.state.InsuranceStrike}
