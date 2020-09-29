@@ -136,7 +136,7 @@ class InsuranceBody extends React.Component {
 
         
         const operation = await this.props.options.methods.putBuyer(this.state.quantity,this.state.Ratio,this.state.duration).send();
-        this.setState({Dialog:true,DialogHeading:"Purchasing Options Contract"});
+        this.setState({Dialog:true,DialogHeading:"Purchasing Security"});
 
         await operation.confirmation();
         this.setState({Dialog:false});
@@ -144,6 +144,18 @@ class InsuranceBody extends React.Component {
         
         
     }
+
+    SellSecurity = async() => {
+      
+      // const operation = await this.props.options.methods.ReleaseContract(1).send();
+      this.setState({Dialog:true,DialogHeading:"Exercising Security"});
+
+      // await operation.confirmation();
+      // this.setState({Dialog:false});
+      console.log("Security Sold");
+      
+      
+  }
 
     handleClose = ()=> {
       this.setState({Dialog:false});
@@ -341,9 +353,13 @@ class InsuranceBody extends React.Component {
                </CardContent>
                </Card>
            </Grid>
-
-
-
+           <Grid item xs={2}>
+            </Grid>
+            <Grid item xs={5}>
+            </Grid>
+            <Grid item xs={4}>
+              <Button onClick={this.SellSecurity} variant="contained" color="primary" >Sell Security</Button>
+            </Grid>
             <Dialog
               open={this.state.Dialog}
               onClose={this.handleClose}
