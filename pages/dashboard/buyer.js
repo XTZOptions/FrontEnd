@@ -36,7 +36,9 @@ export default class extends Component {
     this.state = {wallet:null,tezos:null,token:null,options:null,balance:0,tokenBal:0,oracle:null,
       publicKey:"",Amount:0,estimate:0,
       poolSize:0,totalCapital:0,LockButton:true,CycleTime:null,
-      xtzPrice:4,StrikePrice:0,Duration:14,Counter:1,insuranceState:false
+      xtzPrice:4,Duration:14,Counter:1,insuranceState:false,
+      StrikePrice:0,Quantity:0,Expiry:"",
+      InsuranceQuantity:0,InsuranceStrike:0,InsuranceExpiry:0
     };
    
   } 
@@ -102,19 +104,24 @@ export default class extends Component {
       
         const optionsContract = await this.state.options.storage();
         
-        this.setState({CycleTime:optionsContract.validation.cycleEnd});
-        
         try {
           
           const account = await optionsContract.contractBuyer.get(this.state.publicKey);
           
           if (account != undefined )
           {
-            this.setState({insuranceState:true});
-            console.log("Insurance Purchased");
+            this.setState({
+              
+              insuranceState:true,CycleTime:optionsContract.validation.cycleEnd,poolSize:val.poolSet.length,
+              totalCapital:capital,tokenBal:ALAToken,
+              InsuranceQuantity:account.options.toNumber(),
+              InsuranceStrike:account.strikePrice.toNumber(),
+              InsuranceExpiry:account.expiry
+            });
+            
           }
           else {
-            this.setState({insuranceState:false});
+            this.setState({insuranceState:false,CycleTime:optionsContract.validation.cycleEnd,poolSize:val.poolSet.length,totalCapital:capital,tokenBal:ALAToken});
             console.log("Not Found");
           }
 
@@ -122,11 +129,7 @@ export default class extends Component {
         
         console.log("Value not present");
       }
-        
-        
-       
-        this.setState({poolSize:val.poolSet.length,totalCapital:capital,tokenBal:ALAToken});
-      
+
       }
       
   }
@@ -221,7 +224,7 @@ export default class extends Component {
                           <Grid item xs={8}>
                            <Typography variant="h6" >
                               Total Liquidity :<br/>
-                              {this.state.totalCapital} Tokens
+                              {this.state.totalCapital.toFixed(2)} Tokens
                             </Typography>
                           </Grid>
                         </Grid>
@@ -255,7 +258,7 @@ export default class extends Component {
                           <Grid item xs={8}>
                            <Typography variant="h6" >
                             Personal Balance : <br/>
-                            {this.state.tokenBal} Tokens
+                            {this.state.tokenBal.toFixed(2)} Tokens
                             </Typography>
                           </Grid>
                         </Grid>
@@ -277,7 +280,12 @@ export default class extends Component {
 
                     tokenBalance={this.state.tokenBal}
                     totalCapital={this.state.totalCapital}
+                    
                     insuranceState={this.state.insuranceState}
+                    InsuranceQuantity={this.state.InsuranceQuantity}
+                    InsuranceStrike={this.state.InsuranceStrike}
+                    InsuranceExpiry={this.state.InsuranceExpiry}
+
                   />      
                 </Grid>
               </ThemeProvider>

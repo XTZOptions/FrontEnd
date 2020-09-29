@@ -35,7 +35,7 @@ class InsuranceBody extends React.Component {
     {
         super();
 
-        this.state = {duration:14,quantity:0,StrikeMap:{},StrikePrice:0,
+        this.state = {duration:14,quantity:0,StrikeMap:{},StrikePrice:0,statecheck:false,
         Premium:0,BreakEven:0,Ratio:100,BuyButton:true,Dialog:false,DialogHeading:""};
     }
 
@@ -174,137 +174,197 @@ class InsuranceBody extends React.Component {
     
 
     render()
-    {
+    {   
+      if(this.props.insuranceState == false)
+      {
         return (
                     
+          <Grid container spacing={3}>
+              <Grid item xs={2}>
+              </Grid>
+              <Grid item xs={8}>
+               <Card variant="elevation">
+               <CardContent>
                    <Grid container spacing={3}>
                        <Grid item xs={2}>
+                       <img src="/money.png"/>
                        </Grid>
-                       <Grid item xs={8}>
-                        <Card variant="elevation">
-                        <CardContent>
-                            <Grid container spacing={3}>
-                                <Grid item xs={2}>
-                                <img src="/money.png"/>
-                                </Grid>
-                                <Grid item xs={4}>
-                                <TextField label="Options Quantity" type="number" variant="outlined" onChange={(event)=>{this.updateQuantity(event.target.value)}} />
-                                </Grid>
-                                
-                                <Grid item xs={5}>
-                                <div style={{'marginTop':'2%'}}>
-                                <Typography>
-                                    Contract Duration : {this.state.duration} Days
-                                </Typography>
-                                
-                                <Slider
-                                    defaultValue={14}
-                                    getAriaValueText={this.valuetext}
-                                    aria-labelledby="discrete-slider"
-                                    valueLabelDisplay="auto"
-                                    step={7}
-                                    marks
-                                    min={7}
-                                    max={21}
-                                    onChange={this.DurationChange}
-                                />
-                                </div>
-                                </Grid>
-                            </Grid>  
-                        </CardContent>
-                        </Card>
-                    </Grid>
-                    <Grid item xs={2}>
+                       <Grid item xs={4}>
+                       <TextField label="Options Quantity" type="number" variant="outlined" onChange={(event)=>{this.updateQuantity(event.target.value)}} />
+                       </Grid>
+                       
+                       <Grid item xs={5}>
+                       <div style={{'marginTop':'2%'}}>
+                       <Typography>
+                           Contract Duration : {this.state.duration} Days
+                       </Typography>
+                       
+                       <Slider
+                           defaultValue={14}
+                           getAriaValueText={this.valuetext}
+                           aria-labelledby="discrete-slider"
+                           valueLabelDisplay="auto"
+                           step={7}
+                           marks
+                           min={7}
+                           max={21}
+                           onChange={this.DurationChange}
+                       />
+                       </div>
+                       </Grid>
+                   </Grid>  
+               </CardContent>
+               </Card>
+           </Grid>
+           <Grid item xs={2}>
 
-                    </Grid>
-                    <Grid item xs={2}>
+           </Grid>
+           <Grid item xs={2}>
 
-                    </Grid>
-                    <Grid item xs={8}>
-                    <Card variant="elevation">
-                      <CardContent>
-                          <Grid container spacing={3}>
-                            <Grid item xs={2}>
-                              <img src="/bank.png"/>
-                            </Grid>
-                            <Grid item xs={4}>
-                              <Typography variant="h6">
-                               Strike Price: {this.state.StrikePrice} USD
-                              </Typography>
-                            </Grid>
-                            <Grid item xs={5}>
-                            <div style={{'marginTop':'2%'}}>
-                              <Typography>
-                               Strike Price Range:
-                              </Typography>    
-                              <Slider
-                                  defaultValue={2}
-                                  getAriaValueText={this.valuetext}
-                                  aria-labelledby="discrete-slider"
-                                  valueLabelDisplay="auto"
-                                  step={10}
-                                  marks
-                                  min={80}
-                                  max={120}
-                                  onChange={this.StrikeChange}
-                              />
-                              </div>
-                            </Grid>
-                          </Grid>  
-                      </CardContent>
-                    </Card>
-                    </Grid>
-                    <Grid item xs={2}>
-
-                    </Grid>
-                    <Grid item xs={2}>
-
-                    </Grid>
-                    <Grid item xs={8}>
-                    <Card variant="elevation">
-                      <CardContent>
-                          <Grid container spacing={3}>
-                            <Grid item xs={2}>
-                              <img src="/locked.png"/>
-                            </Grid>
-                            <Grid item xs={3}>
-                              <Typography variant="h6">
-                                Premium Amount: {this.state.Premium} USD
-                              </Typography>
-                            </Grid>
-                            <Grid item xs={3}>
-                              <Typography variant="h6">
-                                Break Even Price:{this.state.BreakEven} USD
-                              </Typography>
-                            </Grid>
-                            
-                            <Grid item xs={4}>
-                              <Button onClick={this.BuySecurity} variant="contained" color="primary" disabled={this.state.BuyButton}>Buy Security</Button>
-                            </Grid>
-                          </Grid>  
-                      </CardContent>
-                    </Card>
-                  </Grid>
-                  <Dialog
-                    open={this.state.Dialog}
-                    onClose={this.handleClose}
-                    aria-labelledby="alert-dialog-title"
-                    aria-describedby="alert-dialog-description"
-                    disableBackdropClick={true}
-                    disableEscapeKeyDown={true}
-                  >
-                    <DialogTitle id="alert-dialog-title">{this.state.DialogHeading}</DialogTitle>
-                    <DialogContent>
-                      <DialogContentText id="alert-dialog-description">
-                        <div style={{'marginLeft':'35%'}}>
-                          <CircularProgress/>
-                        </div>
-                      </DialogContentText>
-                    </DialogContent>
-                  </Dialog>
-
+           </Grid>
+           <Grid item xs={8}>
+           <Card variant="elevation">
+             <CardContent>
+                 <Grid container spacing={3}>
+                   <Grid item xs={2}>
+                     <img src="/bank.png"/>
                    </Grid>
+                   <Grid item xs={4}>
+                     <Typography variant="h6">
+                      Strike Price: {this.state.StrikePrice} USD
+                     </Typography>
+                   </Grid>
+                   <Grid item xs={5}>
+                   <div style={{'marginTop':'2%'}}>
+                     <Typography>
+                      Strike Price Range:
+                     </Typography>    
+                     <Slider
+                         defaultValue={2}
+                         getAriaValueText={this.valuetext}
+                         aria-labelledby="discrete-slider"
+                         valueLabelDisplay="auto"
+                         step={10}
+                         marks
+                         min={80}
+                         max={120}
+                         onChange={this.StrikeChange}
+                     />
+                     </div>
+                   </Grid>
+                 </Grid>  
+             </CardContent>
+           </Card>
+           </Grid>
+           <Grid item xs={2}>
+
+           </Grid>
+           <Grid item xs={2}>
+
+           </Grid>
+           <Grid item xs={8}>
+           <Card variant="elevation">
+             <CardContent>
+                 <Grid container spacing={3}>
+                   <Grid item xs={2}>
+                     <img src="/locked.png"/>
+                   </Grid>
+                   <Grid item xs={3}>
+                     <Typography variant="h6">
+                       Premium Amount: {this.state.Premium} USD
+                     </Typography>
+                   </Grid>
+                   <Grid item xs={3}>
+                     <Typography variant="h6">
+                       Break Even Price:{this.state.BreakEven} USD
+                     </Typography>
+                   </Grid>
+                   
+                   <Grid item xs={4}>
+                     <Button onClick={this.BuySecurity} variant="contained" color="primary" disabled={this.state.BuyButton}>Buy Security</Button>
+                   </Grid>
+                 </Grid>  
+             </CardContent>
+           </Card>
+         </Grid>
+         <Dialog
+           open={this.state.Dialog}
+           onClose={this.handleClose}
+           aria-labelledby="alert-dialog-title"
+           aria-describedby="alert-dialog-description"
+           disableBackdropClick={true}
+           disableEscapeKeyDown={true}
+         >
+           <DialogTitle id="alert-dialog-title">{this.state.DialogHeading}</DialogTitle>
+           <DialogContent>
+             <DialogContentText id="alert-dialog-description">
+               <div style={{'marginLeft':'35%'}}>
+                 <CircularProgress/>
+               </div>
+             </DialogContentText>
+           </DialogContent>
+         </Dialog>
+
+          </Grid>
         )
+      }
+      else{
+
+        return (
+          <Grid container spacing={3}> 
+            <Grid item xs={2}>
+            </Grid>
+            <Grid item xs={8}>
+               <Card variant="elevation">
+               <CardContent>
+                   <Grid container spacing={3}>
+                       <Grid item xs={2}>
+                       <img src="/money.png"/>
+                       </Grid>
+                       <Grid item xs={3}>
+                        <Typography variant="h6">
+                          Strike Price: {this.props.InsuranceStrike/100} USD
+                        </Typography>
+                       </Grid>
+                       
+                       <Grid item xs={3}>
+                        <Typography variant="h6">
+                          Options Quantity:  {this.props.InsuranceQuantity}
+                        </Typography>
+                       </Grid>
+                       <Grid item xs={3}>
+                        <Typography variant="h6">
+                          Expiry:  {this.props.InsuranceExpiry}
+                        </Typography>
+                       </Grid>
+                   </Grid>  
+               </CardContent>
+               </Card>
+           </Grid>
+
+
+
+            <Dialog
+              open={this.state.Dialog}
+              onClose={this.handleClose}
+              aria-labelledby="alert-dialog-title"
+              aria-describedby="alert-dialog-description"
+              disableBackdropClick={true}
+              disableEscapeKeyDown={true}
+            >
+            <DialogTitle id="alert-dialog-title">{this.state.DialogHeading}</DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                <div style={{'marginLeft':'35%'}}>
+                  <CircularProgress/>
+                </div>
+              </DialogContentText>
+            </DialogContent>
+          </Dialog>
+          </Grid>
+        )
+      }
+        
     }
 } 
 
