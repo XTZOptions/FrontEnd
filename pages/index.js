@@ -202,7 +202,7 @@ export default function Home() {
                 Users can view and transfer our tokens with the help of thanos wallet.
               </p>
               <a className="learn-more">
-                Token Address: KT1CdcfvT8uBu8ZorXhP4EVtf8VNdPLZmafg
+                Token Address: KT1LE93y3jjtquCM6s3SAUbQtZSk7kfsJPoz
               </a>
             </div>
           

@@ -365,7 +365,7 @@ export default class extends Component {
                               </Typography>
                             </Grid>
                             <Grid item xs={12} sm={12}>
-                              <Button onClick={this.xtzSwap} variant="contained" color="primary" disabled={this.state.xtzSupplyButton}>Swap XTZ</Button>
+                              <Button onClick={this.xtzSwap} variant="contained" color="primary" disabled={this.state.xtzSupplyButton}>Get XTZ</Button>
                             </Grid>
                           </Grid>  
                       </CardContent>
@@ -399,7 +399,7 @@ export default class extends Component {
                               </Typography>
                             </Grid>
                             <Grid item xs={12} sm={12}>
-                              <Button onClick={this.StableSwap} variant="contained" color="secondary" disabled={this.state.StableSupplyButton}>Swap ALA</Button>
+                              <Button onClick={this.StableSwap} variant="contained" color="secondary" disabled={this.state.StableSupplyButton}>Get ALA Tokens</Button>
                             </Grid>
                           </Grid>  
                       </CardContent>
