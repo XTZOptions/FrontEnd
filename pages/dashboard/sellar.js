@@ -313,7 +313,7 @@ export default class extends Component {
                           </Grid>
                           <Grid item xs={8}>
                            <Typography variant="h6" >
-                              Liquidity: {this.state.totalCapital.toFixed(2)} ALA Tokens 
+                              Liquidity: {this.state.totalCapital.toFixed(2)} USDY Tokens 
                             </Typography>
                           </Grid>
                         </Grid>
@@ -388,7 +388,7 @@ export default class extends Component {
                             </Grid>
                             <Grid item xs={6}>
                               <Typography variant="h6">
-                                Premium Earned: {this.state.premium.toFixed(3)} ALA Tokens
+                                Premium Earned: {this.state.premium.toFixed(3)} USDY Tokens
                               </Typography>
                             </Grid>
                             <Grid item xs={4}>
@@ -413,7 +413,7 @@ export default class extends Component {
                             </Grid>
                             <Grid item xs={6}>
                               <Typography variant="h6">
-                                Locked Amount: {this.state.LockAmount.toFixed(2)} ALA Tokens
+                                Locked Amount: {this.state.LockAmount.toFixed(2)} USDY Tokens
                               </Typography>
                             </Grid>
                             <Grid item xs={4}>

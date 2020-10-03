@@ -259,7 +259,7 @@ export default class extends Component {
                           <Grid item xs={8}>
                            <Typography variant="h6" >
                             Personal Balance : <br/>
-                            {this.state.tokenBal.toFixed(2)} Tokens
+                            {this.state.tokenBal.toFixed(2)}  USDY Tokens
                             </Typography>
                           </Grid>
                         </Grid>

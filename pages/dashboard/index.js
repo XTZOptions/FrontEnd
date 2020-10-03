@@ -261,7 +261,7 @@ export default class extends Component {
                           </Grid>
                           <Grid item xs={8}>
                            <Typography variant="h6" >
-                            {this.state.tokenBal} ALA Token
+                            {this.state.tokenBal} USDY Token
                             </Typography>
                           </Grid>
                         </Grid>
@@ -286,10 +286,10 @@ export default class extends Component {
                             </Grid>
                             <Grid item xs={4}>
                               <Typography variant="body1">
-                                Tokens: {this.state.estimate} ALA
+                                Tokens: {this.state.estimate} USDY
                                 <br/>
                                 <br/>
-                                1 XTZ = {this.state.xtzPrice} ALA Tokens
+                                1 XTZ = {this.state.xtzPrice} USDY Tokens
                               </Typography>
                             </Grid>
                             <Grid item xs={3}>
@@ -311,7 +311,7 @@ export default class extends Component {
                 disableBackdropClick={true}
                 disableEscapeKeyDown={true}
               >
-              <DialogTitle id="alert-dialog-title">{"Minting ALA Tokens"}</DialogTitle>
+              <DialogTitle id="alert-dialog-title">{"Minting USDY Tokens"}</DialogTitle>
               <DialogContent>
                 <DialogContentText id="alert-dialog-description">
                   <div style={{'marginLeft':'35%'}}>

@@ -336,7 +336,7 @@ export default class extends Component {
                           </Grid>
                           <Grid item xs={8}>
                            <Typography variant="h6" >
-                            {this.state.tokenBal} ALA Token
+                            {this.state.tokenBal} USDY Token
                             </Typography>
                           </Grid>
                         </Grid>
@@ -361,7 +361,7 @@ export default class extends Component {
                             </Grid>
                             <Grid item xs={12} sm={12}>
                               <Typography variant="body1">
-                                Required Tokens: {this.state.xtzestimate} ALA Tokens
+                                Required Tokens: {this.state.xtzestimate} USDY Tokens
                               </Typography>
                             </Grid>
                             <Grid item xs={12} sm={12}>
@@ -391,7 +391,7 @@ export default class extends Component {
                               <img src="/money.png"/>
                             </Grid>
                             <Grid item item xs={12} sm={12}>
-                              <TextField label="ALA Token Amount" type="number" variant="outlined" onChange={(event)=>{this.StableupdateAmount(event.target.value)}} />
+                              <TextField label="USDY Token Amount" type="number" variant="outlined" onChange={(event)=>{this.StableupdateAmount(event.target.value)}} />
                             </Grid>
                             <Grid item xs={12} sm={12}>
                               <Typography variant="body1">
@@ -399,7 +399,7 @@ export default class extends Component {
                               </Typography>
                             </Grid>
                             <Grid item xs={12} sm={12}>
-                              <Button onClick={this.StableSwap} variant="contained" color="secondary" disabled={this.state.StableSupplyButton}>Get ALA Tokens</Button>
+                              <Button onClick={this.StableSwap} variant="contained" color="secondary" disabled={this.state.StableSupplyButton}>Get USDY Tokens</Button>
                             </Grid>
                           </Grid>  
                       </CardContent>
