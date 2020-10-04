@@ -131,7 +131,7 @@ export default class extends Component {
 
           const operation = await this.state.exchange.methods.GetStable(this.state.StableAmount).send({amount:this.state.StableMutez,mutez:true});
 
-          this.setState({Dialog:true,DialogMessage:"Swap XTZ to ALA"});
+          this.setState({Dialog:true,DialogMessage:"Swap XTZ to USDY"});
 
           await operation.confirmation();
           
@@ -149,7 +149,7 @@ export default class extends Component {
 
           const operation = await this.state.exchange.methods.GetXtz(this.state.xtzAmount).send();
 
-          this.setState({Dialog:true,DialogMessage:"Swap ALA to XTZ"});
+          this.setState({Dialog:true,DialogMessage:"Swap USDY to XTZ"});
 
           await operation.confirmation();
           
